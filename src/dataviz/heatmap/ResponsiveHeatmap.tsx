@@ -1,19 +1,19 @@
 import { useRef } from "react";
-import { Barplot } from "./Barplot";
+import { Heatmap } from "./Heatmap";
 import { useDimensions } from "../use-dimensions";
 
-type ResponsiveBarplotProps = {
-  data: { name: string; value: number }[];
+type ResponsiveHeatmapProps = {
+  data: { x: string; y: string; value: number }[];
   colorList: string[];
 };
 
-export const ResponsiveBarplot = (props: ResponsiveBarplotProps) => {
+export const ResponsiveHeatmap = (props: ResponsiveHeatmapProps) => {
   const chartRef = useRef<HTMLDivElement>(null);
   const chartSize = useDimensions(chartRef);
 
   return (
     <div style={{ height: "100%", width: "100%" }} ref={chartRef}>
-      <Barplot {...props} width={chartSize.width} height={chartSize.height} />
+      <Heatmap {...props} width={chartSize.width} height={chartSize.height} />
     </div>
   );
 };

@@ -12,8 +12,10 @@ import { barplotData } from "@/dataviz/barplot/data";
 import { ChoroplethMap } from "@/dataviz/choropleth/ChoroplethMap";
 import { geoData, numData } from "@/dataviz/choropleth/data";
 import { Heatmap } from "@/dataviz/heatmap/Heatmap";
+import { ResponsiveHeatmap } from "@/dataviz/heatmap/ResponsiveHeatmap";
 import { heatmapData } from "@/dataviz/heatmap/data";
 import { PieChart } from "@/dataviz/piechart/PieChart";
+import { ResponsivePieChart } from "@/dataviz/piechart/ResponsivePieChart";
 import { pieData } from "@/dataviz/piechart/data";
 import { Treemap } from "@/dataviz/treemap/Treemap";
 import { treemapData } from "@/dataviz/treemap/data";
@@ -104,7 +106,7 @@ export default function Home() {
 
       <br />
 
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-4 gap-2 w-full">
         <div className="col-span-1" style={{ height: 300 }}>
           <GraphTile chartType="barplot" palette={selectedColorObject}>
             <ResponsiveBarplot
@@ -113,19 +115,22 @@ export default function Home() {
             />
           </GraphTile>
         </div>
-        <Heatmap
-          data={heatmapData}
-          width={300}
-          height={300}
-          colorList={selectedColorList}
-        />
-        <PieChart
-          data={pieData}
-          width={600}
-          height={600}
-          colorList={selectedColorList}
-        />
+        <div className="col-span-1" style={{ height: 300 }}>
+          <GraphTile chartType="heatmap" palette={selectedColorObject}>
+            <ResponsiveHeatmap
+              data={heatmapData}
+              colorList={selectedColorList}
+            />
+          </GraphTile>
+        </div>
+
+        <div className="col-span-2" style={{ height: 600 }}>
+          <GraphTile chartType="heatmap" palette={selectedColorObject}>
+            <ResponsivePieChart data={pieData} colorList={selectedColorList} />
+          </GraphTile>
+        </div>
       </div>
+
       <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
         <Treemap
           data={treemapData}

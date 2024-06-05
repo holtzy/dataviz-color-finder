@@ -1,10 +1,11 @@
 import { useMemo } from "react";
 import * as d3 from "d3";
 
-type DataItem = {
+export type DataItem = {
   name: string;
   value: number;
 };
+
 type PieChartProps = {
   width: number;
   height: number;
