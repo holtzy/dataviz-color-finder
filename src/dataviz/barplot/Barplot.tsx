@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import { AxisLeftBand } from "../axes/AxisLeftBand";
 import { AxisBottomLinear } from "../axes/AxisBottomLinear";
 
-const MARGIN = { top: 10, right: 10, bottom: 20, left: 70 };
+const MARGIN = { top: 10, right: 10, bottom: 20, left: 55 };
 const BAR_PADDING = 0.2;
 
 type BarplotProps = {

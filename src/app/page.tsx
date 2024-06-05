@@ -10,6 +10,7 @@ import { Barplot } from "@/dataviz/barplot/Barplot";
 import { ResponsiveBarplot } from "@/dataviz/barplot/ResponsiveBarplot";
 import { barplotData } from "@/dataviz/barplot/data";
 import { ChoroplethMap } from "@/dataviz/choropleth/ChoroplethMap";
+import { ResponsiveChoropleth } from "@/dataviz/choropleth/ResponsiveChoropleth";
 import { geoData, numData } from "@/dataviz/choropleth/data";
 import { Heatmap } from "@/dataviz/heatmap/Heatmap";
 import { ResponsiveHeatmap } from "@/dataviz/heatmap/ResponsiveHeatmap";
@@ -17,6 +18,7 @@ import { heatmapData } from "@/dataviz/heatmap/data";
 import { PieChart } from "@/dataviz/piechart/PieChart";
 import { ResponsivePieChart } from "@/dataviz/piechart/ResponsivePieChart";
 import { pieData } from "@/dataviz/piechart/data";
+import { ResponsiveTreemap } from "@/dataviz/treemap/ResponsiveTreemap";
 import { Treemap } from "@/dataviz/treemap/Treemap";
 import { treemapData } from "@/dataviz/treemap/data";
 import { getColorListFromString } from "@/lib/utils";
@@ -69,8 +71,42 @@ export default function Home() {
     };
   }, [switchToPreviousPalette]);
 
+  const barplot = (
+    <GraphTile chartType="barplot" palette={selectedColorObject}>
+      <ResponsiveBarplot data={barplotData} colorList={selectedColorList} />
+    </GraphTile>
+  );
+
+  const heatmap = (
+    <GraphTile chartType="heatmap" palette={selectedColorObject}>
+      <ResponsiveHeatmap data={heatmapData} colorList={selectedColorList} />
+    </GraphTile>
+  );
+
+  const pieChart = (
+    <GraphTile chartType="pie" palette={selectedColorObject}>
+      <ResponsivePieChart data={pieData} colorList={selectedColorList} />
+    </GraphTile>
+  );
+
+  const treemap = (
+    <GraphTile chartType="treemap" palette={selectedColorObject}>
+      <ResponsiveTreemap data={treemapData} colorList={selectedColorList} />
+    </GraphTile>
+  );
+
+  const choropleth = (
+    <GraphTile chartType="choropleth" palette={selectedColorObject}>
+      <ResponsiveChoropleth
+        geoData={geoData}
+        numData={numData}
+        colorList={selectedColorList}
+      />
+    </GraphTile>
+  );
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between py-12 px-2">
       <div className="flex gap-6 items-top">
         <Button variant={"outline"}>
           <Filter />
@@ -104,48 +140,58 @@ export default function Home() {
         <ExportDialogButton selectedColorObject={selectedColorObject} />
       </div>
 
-      <br />
-
-      <div className="grid grid-cols-4 gap-2 w-full">
+      {/* Small screen */}
+      <div className="grid sm:hidden grid-cols-2 gap-1 w-full mt-20">
         <div className="col-span-1" style={{ height: 300 }}>
-          <GraphTile chartType="barplot" palette={selectedColorObject}>
-            <ResponsiveBarplot
-              data={barplotData}
-              colorList={selectedColorList}
-            />
-          </GraphTile>
+          {barplot}
         </div>
         <div className="col-span-1" style={{ height: 300 }}>
-          <GraphTile chartType="heatmap" palette={selectedColorObject}>
-            <ResponsiveHeatmap
-              data={heatmapData}
-              colorList={selectedColorList}
-            />
-          </GraphTile>
+          {heatmap}
         </div>
-
-        <div className="col-span-2" style={{ height: 600 }}>
-          <GraphTile chartType="heatmap" palette={selectedColorObject}>
-            <ResponsivePieChart data={pieData} colorList={selectedColorList} />
-          </GraphTile>
+        <div className="col-span-1" style={{ height: 300 }}>
+          {pieChart}
+        </div>
+        <div className="col-span-1" style={{ height: 300 }}>
+          {treemap}
         </div>
       </div>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Treemap
-          data={treemapData}
-          width={300}
-          height={300}
-          colorList={selectedColorList}
-        />
-        <ChoroplethMap
-          geoData={geoData}
-          numData={numData}
-          width={800}
-          height={800}
-          colorList={selectedColorList}
-        />
-        ,
+      {/* Medium screen */}
+      <div className="hidden md:grid lg:hidden grid-cols-4 gap-2 w-full mt-20">
+        <div className="col-span-1" style={{ height: 300 }}>
+          {barplot}
+        </div>
+        <div className="col-span-1" style={{ height: 300 }}>
+          {heatmap}
+        </div>
+        <div className="col-span-2" style={{ height: 600 }}>
+          {pieChart}
+        </div>
+        <div className="col-span-1" style={{ height: 300 }}>
+          {treemap}
+        </div>
+        <div className="col-span-3" style={{ height: 700 }}>
+          {choropleth}
+        </div>
+      </div>
+
+      {/* big screen */}
+      <div className="hidden lg:grid grid-cols-4 gap-2 w-full mt-20">
+        <div className="col-span-1" style={{ height: 300 }}>
+          {barplot}
+        </div>
+        <div className="col-span-1" style={{ height: 300 }}>
+          {heatmap}
+        </div>
+        <div className="col-span-2" style={{ height: 600 }}>
+          {pieChart}
+        </div>
+        <div className="col-span-1" style={{ height: 300 }}>
+          {treemap}
+        </div>
+        <div className="col-span-3" style={{ height: 700 }}>
+          {choropleth}
+        </div>
       </div>
     </main>
   );

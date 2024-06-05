@@ -22,7 +22,7 @@ export const Treemap = ({ width, height, data, colorList }: TreemapProps) => {
     .range(colorList);
 
   const root = useMemo(() => {
-    const treeGenerator = d3.treemap<Tree>().size([width, height]).padding(4);
+    const treeGenerator = d3.treemap<Tree>().size([width, height]).padding(2);
     return treeGenerator(hierarchy);
   }, [hierarchy, width, height]);
 
