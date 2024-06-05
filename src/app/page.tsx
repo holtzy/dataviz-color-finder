@@ -1,6 +1,7 @@
 "use client";
 
 import { ColorPaletteSelectButton } from "@/components/ColorPaletteSelectButton";
+import { Button } from "@/components/ui/button";
 import { colorPaletteList } from "@/data/color-palette-list";
 import { Barplot } from "@/dataviz/barplot/Barplot";
 import { barplotData } from "@/dataviz/barplot/data";
@@ -13,25 +14,49 @@ import { pieData } from "@/dataviz/piechart/data";
 import { Treemap } from "@/dataviz/treemap/Treemap";
 import { treemapData } from "@/dataviz/treemap/data";
 import { getColorListFromString } from "@/lib/utils";
-import Image from "next/image";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 export default function Home() {
-  const [selectedColorPalette, setSelectedColorPalette] =
-    useState("ArcticGates");
+  const [selectedPaletteId, setSelectedPaletteId] = useState(0);
 
-  const selectedColorObject =
-    colorPaletteList.find((col) => col.name === selectedColorPalette) ||
-    colorPaletteList[0];
-
+  const selectedColorObject = colorPaletteList[selectedPaletteId];
   const selectedColorList = getColorListFromString(selectedColorObject.palette);
+
+  const switchToPreviousPalette = () => {
+    const newId =
+      selectedPaletteId - 1 < 0
+        ? colorPaletteList.length - 1
+        : selectedPaletteId - 1;
+    setSelectedPaletteId(newId);
+  };
+
+  const switchToNextPalette = () => {
+    const newId =
+      selectedPaletteId + 2 > colorPaletteList.length
+        ? 0
+        : selectedPaletteId + 1;
+    setSelectedPaletteId(newId);
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <ColorPaletteSelectButton
-        selectedColorPalette={selectedColorPalette}
-        setSelectedColorPalette={setSelectedColorPalette}
-      />
+      <div className="flex gap-6 items-center">
+        <ColorPaletteSelectButton
+          paletteList={colorPaletteList}
+          selectedPaletteId={selectedPaletteId}
+          setSelectedPaletteId={setSelectedPaletteId}
+        />
+
+        <div className="flex gap-2">
+          <Button variant={"outline"} onClick={switchToPreviousPalette}>
+            <ArrowLeft size={15} />
+          </Button>
+          <Button variant={"outline"} onClick={switchToNextPalette}>
+            <ArrowRight size={15} />
+          </Button>
+        </div>
+      </div>
 
       <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
         <Barplot

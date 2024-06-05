@@ -41,7 +41,6 @@ export const Heatmap = ({ width, height, data, colorList }: HeatmapProps) => {
   if (!min || !max) {
     return null;
   }
-  console.log("min", min, max);
   var colorScale = d3
     .scaleThreshold<number, string>()
     .domain([0, 8, 16, 24, 32, 40])

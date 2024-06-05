@@ -1,4 +1,4 @@
-type ColorPalette = {
+export type ColorPalette = {
     name: string,
     palette: string,
     source: string
