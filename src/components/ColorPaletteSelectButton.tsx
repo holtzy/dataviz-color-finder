@@ -5,17 +5,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { colorPaletteList } from "@/data/color-palette-list";
 
-export const ColorPaletteSelectButton = () => {
+type ColorPaletteSelectButtonProps = {
+  colorPalette: string;
+  setColorPalette: (newPalette: string) => void;
+};
+
+export const ColorPaletteSelectButton = ({
+  colorPalette,
+  setColorPalette,
+}: ColorPaletteSelectButtonProps) => {
   return (
-    <Select>
+    <Select onValueChange={(newPalette) => setColorPalette(newPalette)}>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Theme" />
+        <SelectValue placeholder={colorPalette} />
       </SelectTrigger>
+
       <SelectContent>
-        <SelectItem value="light">Light</SelectItem>
-        <SelectItem value="dark">Dark</SelectItem>
-        <SelectItem value="system">System</SelectItem>
+        {colorPaletteList.map((pal) => {
+          return <SelectItem value={pal.name}>{pal.name}</SelectItem>;
+        })}
       </SelectContent>
     </Select>
   );
