@@ -7,9 +7,10 @@ type HeatmapProps = {
   width: number;
   height: number;
   data: { x: string; y: string; value: number }[];
+  colorList: string[];
 };
 
-export const Heatmap = ({ width, height, data }: HeatmapProps) => {
+export const Heatmap = ({ width, height, data, colorList }: HeatmapProps) => {
   // bounds = area inside the axis
   const boundsWidth = width - MARGIN.right - MARGIN.left;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
@@ -40,12 +41,11 @@ export const Heatmap = ({ width, height, data }: HeatmapProps) => {
   if (!min || !max) {
     return null;
   }
-
-  // Color scale
-  const colorScale = d3
-    .scaleSequential()
-    .interpolator(d3.interpolateInferno)
-    .domain([min, max]);
+  console.log("min", min, max);
+  var colorScale = d3
+    .scaleThreshold<number, string>()
+    .domain([0, 8, 16, 24, 32, 40])
+    .range(colorList);
 
   // Build the rectangles
   const allRects = data.map((d, i) => {

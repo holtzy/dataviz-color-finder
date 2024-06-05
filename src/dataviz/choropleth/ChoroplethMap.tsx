@@ -1,18 +1,25 @@
-import * as d3 from 'd3';
-import { FeatureCollection } from 'geojson';
+import * as d3 from "d3";
+import { FeatureCollection } from "geojson";
 
 type ChoroplethMapProps = {
   width: number;
   height: number;
   geoData: FeatureCollection;
   numData: { code: string; value: number }[];
+  colorList: string[];
 };
 
-export const ChoroplethMap = ({ width, height, geoData, numData }: ChoroplethMapProps) => {
+export const ChoroplethMap = ({
+  width,
+  height,
+  geoData,
+  numData,
+  colorList,
+}: ChoroplethMapProps) => {
   var colorScale = d3
     .scaleThreshold<number, string>()
     .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
-    .range(d3.schemeBlues[7]);
+    .range(colorList);
 
   const projection = d3
     .geoMercator()
@@ -22,11 +29,11 @@ export const ChoroplethMap = ({ width, height, geoData, numData }: ChoroplethMap
   const geoPathGenerator = d3.geoPath().projection(projection);
 
   const allSvgPaths = geoData.features
-    .filter((shape) => shape.id !== 'ATA')
+    .filter((shape) => shape.id !== "ATA")
     .map((shape) => {
       const regionData = numData.find((region) => region.code === shape.id);
 
-      const color = regionData ? colorScale(regionData?.value) : 'lightgrey';
+      const color = regionData ? colorScale(regionData?.value) : "lightgrey";
 
       return (
         <path
