@@ -2,6 +2,7 @@
 
 import { ColorPaletteSelectButton } from "@/components/ColorPaletteSelectButton";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { colorPaletteList } from "@/data/color-palette-list";
 import { Barplot } from "@/dataviz/barplot/Barplot";
 import { barplotData } from "@/dataviz/barplot/data";
@@ -65,12 +66,22 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="flex gap-6 items-center">
-        <ColorPaletteSelectButton
-          paletteList={colorPaletteList}
-          selectedPaletteId={selectedPaletteId}
-          setSelectedPaletteId={setSelectedPaletteId}
-        />
+      <div className="flex gap-6 items-top">
+        <div className="flex flex-col">
+          <ColorPaletteSelectButton
+            paletteList={colorPaletteList}
+            selectedPaletteId={selectedPaletteId}
+            setSelectedPaletteId={setSelectedPaletteId}
+          />
+          <div className="flex gap-2 pt-2 text-xs text-gray-500">
+            <span>Source: </span>
+            <span>{selectedColorObject.source}</span>
+            <Separator orientation="vertical" />
+            <span>{selectedColorList.length + " colors"}</span>
+            <Separator orientation="vertical" />
+            <span>Continuous</span>
+          </div>
+        </div>
 
         <div className="flex gap-2">
           <Button variant={"outline"} onClick={switchToPreviousPalette}>
