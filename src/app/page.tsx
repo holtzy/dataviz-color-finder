@@ -106,7 +106,7 @@ export default function Home() {
 
       <div className="grid grid-cols-4 gap-2">
         <div className="col-span-1" style={{ height: 300 }}>
-          <GraphTile>
+          <GraphTile chartType="barplot" palette={selectedColorObject}>
             <ResponsiveBarplot
               data={barplotData}
               colorList={selectedColorList}
