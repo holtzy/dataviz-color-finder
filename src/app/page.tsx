@@ -2,10 +2,12 @@
 
 import { ColorPaletteSelectButton } from "@/components/ColorPaletteSelectButton";
 import { ExportDialogButton } from "@/components/ExportDialogButton";
+import { GraphTile } from "@/components/GraphTile";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { colorPaletteList } from "@/data/color-palette-list";
 import { Barplot } from "@/dataviz/barplot/Barplot";
+import { ResponsiveBarplot } from "@/dataviz/barplot/ResponsiveBarplot";
 import { barplotData } from "@/dataviz/barplot/data";
 import { ChoroplethMap } from "@/dataviz/choropleth/ChoroplethMap";
 import { geoData, numData } from "@/dataviz/choropleth/data";
@@ -100,13 +102,17 @@ export default function Home() {
         <ExportDialogButton selectedColorObject={selectedColorObject} />
       </div>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Barplot
-          data={barplotData}
-          width={300}
-          height={300}
-          colorList={selectedColorList}
-        />
+      <br />
+
+      <div className="grid grid-cols-4 gap-2">
+        <div className="col-span-1" style={{ height: 300 }}>
+          <GraphTile>
+            <ResponsiveBarplot
+              data={barplotData}
+              colorList={selectedColorList}
+            />
+          </GraphTile>
+        </div>
         <Heatmap
           data={heatmapData}
           width={300}
