@@ -8,9 +8,10 @@ type BarplotProps = {
   width: number;
   height: number;
   data: { name: string; value: number }[];
+  colorList: string[];
 };
 
-export const Barplot = ({ width, height, data }: BarplotProps) => {
+export const Barplot = ({ width, height, data, colorList }: BarplotProps) => {
   // bounds = area inside the graph axis = calculated by substracting the margins
   const boundsWidth = width - MARGIN.right - MARGIN.left;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
@@ -48,10 +49,10 @@ export const Barplot = ({ width, height, data }: BarplotProps) => {
           y={yScale(d.name)}
           width={xScale(d.value)}
           height={yScale.bandwidth()}
-          opacity={0.7}
-          stroke="#9d174d"
-          fill="#9d174d"
-          fillOpacity={0.3}
+          opacity={1}
+          stroke={"grey"}
+          fill={colorList[i]}
+          fillOpacity={0.9}
           strokeWidth={1}
           rx={1}
         />
