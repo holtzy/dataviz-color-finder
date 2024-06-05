@@ -8,18 +8,18 @@ import {
 import { colorPaletteList } from "@/data/color-palette-list";
 
 type ColorPaletteSelectButtonProps = {
-  colorPalette: string;
-  setColorPalette: (newPalette: string) => void;
+  selectedColorPalette: string;
+  setSelectedColorPalette: (newPalette: string) => void;
 };
 
 export const ColorPaletteSelectButton = ({
-  colorPalette,
-  setColorPalette,
+  selectedColorPalette,
+  setSelectedColorPalette,
 }: ColorPaletteSelectButtonProps) => {
   return (
-    <Select onValueChange={(newPalette) => setColorPalette(newPalette)}>
+    <Select onValueChange={(newPalette) => setSelectedColorPalette(newPalette)}>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder={colorPalette} />
+        <SelectValue placeholder={selectedColorPalette} />
       </SelectTrigger>
 
       <SelectContent>
