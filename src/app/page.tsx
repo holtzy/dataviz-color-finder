@@ -15,7 +15,7 @@ import { Treemap } from "@/dataviz/treemap/Treemap";
 import { treemapData } from "@/dataviz/treemap/data";
 import { getColorListFromString } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [selectedPaletteId, setSelectedPaletteId] = useState(0);
@@ -38,6 +38,30 @@ export default function Home() {
         : selectedPaletteId + 1;
     setSelectedPaletteId(newId);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowRight") {
+        switchToNextPalette();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [switchToNextPalette]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") {
+        switchToPreviousPalette();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [switchToPreviousPalette]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
