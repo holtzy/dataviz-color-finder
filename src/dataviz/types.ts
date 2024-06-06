@@ -1,1 +1,1 @@
-export type ChartType = "barplot" | "heatmap" | "scatterplot" | "choropleth" | "pie" | "treemap"
+export type ChartType = "barplot" | "bubble" | "heatmap" | "scatterplot" | "choropleth" | "pie" | "treemap"

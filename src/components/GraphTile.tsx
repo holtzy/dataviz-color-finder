@@ -22,7 +22,7 @@ export const GraphTile = ({ children, chartType, palette }: GraphTileProps) => {
       </div>
 
       <div className="absolute -top-6 right-0 ">
-        <span className="text-sm text-gray-200 group-hover:text-black font-thin first-letter:uppercase">
+        <span className="text-sm text-gray-400 group-hover:text-black font-thin first-letter:uppercase">
           {chartType.charAt(0).toUpperCase() + chartType.slice(1)}
         </span>
       </div>

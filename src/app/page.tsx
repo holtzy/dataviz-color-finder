@@ -9,6 +9,8 @@ import { colorPaletteList } from "@/data/color-palette-list";
 import { Barplot } from "@/dataviz/barplot/Barplot";
 import { ResponsiveBarplot } from "@/dataviz/barplot/ResponsiveBarplot";
 import { barplotData } from "@/dataviz/barplot/data";
+import { ResponsiveBubblePlot } from "@/dataviz/bubbleplot/ResponsiveBubblePlot";
+import { bubblePlotData } from "@/dataviz/bubbleplot/data";
 import { ChoroplethMap } from "@/dataviz/choropleth/ChoroplethMap";
 import { ResponsiveChoropleth } from "@/dataviz/choropleth/ResponsiveChoropleth";
 import { geoData, numData } from "@/dataviz/choropleth/data";
@@ -95,6 +97,15 @@ export default function Home() {
     </GraphTile>
   );
 
+  const bubbleplot = (
+    <GraphTile chartType="bubble" palette={selectedColorObject}>
+      <ResponsiveBubblePlot
+        data={bubblePlotData}
+        colorList={selectedColorList}
+      />
+    </GraphTile>
+  );
+
   const choropleth = (
     <GraphTile chartType="choropleth" palette={selectedColorObject}>
       <ResponsiveChoropleth
@@ -141,7 +152,7 @@ export default function Home() {
   );
 
   return (
-    <main className="flex flex-col py-12 px-2 gap-12">
+    <main className="flex flex-col py-12 px-8 gap-12">
       {/* Small & Md screen: Control Buttons Row */}
       <div className="flex md:hidden flex-col gap-8 ">
         <div className="flex gap-6 items-top opacity-60">
@@ -175,6 +186,9 @@ export default function Home() {
         </div>
         <div className="col-span-1" style={{ height: 300 }}>
           {treemap}
+        </div>
+        <div className="col-span-1" style={{ height: 300 }}>
+          {bubbleplot}
         </div>
       </div>
 
