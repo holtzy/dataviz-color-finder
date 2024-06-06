@@ -59,6 +59,14 @@ cmap = load_cmap("${selectedColorObject.name}")
               <code>{snippetPythonCode}</code>
             </pre>
           </div>
+
+          <br />
+
+          <DialogTitle>Individual Chart Code</DialogTitle>
+          <DialogDescription className="mt-2">
+            Hover any of the chart in this application to see a dedicated code
+            button
+          </DialogDescription>
         </div>
       </DialogContent>
     </Dialog>

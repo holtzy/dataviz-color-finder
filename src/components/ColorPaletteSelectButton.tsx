@@ -22,6 +22,7 @@ export const ColorPaletteSelectButton = ({
   return (
     <Select
       onValueChange={(newPalette) => setSelectedPaletteId(Number(newPalette))}
+      value={paletteList[selectedPaletteId].name}
     >
       <SelectTrigger className="w-[400px]">
         <SelectValue>

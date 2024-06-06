@@ -20,6 +20,8 @@ import { heatmapData } from "@/dataviz/heatmap/data";
 import { PieChart } from "@/dataviz/piechart/PieChart";
 import { ResponsivePieChart } from "@/dataviz/piechart/ResponsivePieChart";
 import { pieData } from "@/dataviz/piechart/data";
+import { ResponsiveStreamgraph } from "@/dataviz/streamgraph/ResponsiveStreamgraph";
+import { dataStreamgraph } from "@/dataviz/streamgraph/data";
 import { ResponsiveTreemap } from "@/dataviz/treemap/ResponsiveTreemap";
 import { Treemap } from "@/dataviz/treemap/Treemap";
 import { treemapData } from "@/dataviz/treemap/data";
@@ -32,6 +34,11 @@ export default function Home() {
 
   const selectedColorObject = colorPaletteList[selectedPaletteId];
   const selectedColorList = getColorListFromString(selectedColorObject.palette);
+
+  const snippetPythonCode = `
+from pypalettes import load_cmap
+cmap = load_cmap("${selectedColorObject.name}")
+`.trim();
 
   const switchToPreviousPalette = () => {
     const newId =
@@ -106,6 +113,15 @@ export default function Home() {
     </GraphTile>
   );
 
+  const streamgraph = (
+    <GraphTile chartType="streamgraph" palette={selectedColorObject}>
+      <ResponsiveStreamgraph
+        data={dataStreamgraph}
+        colorList={selectedColorList}
+      />
+    </GraphTile>
+  );
+
   const choropleth = (
     <GraphTile chartType="choropleth" palette={selectedColorObject}>
       <ResponsiveChoropleth
@@ -152,9 +168,9 @@ export default function Home() {
   );
 
   return (
-    <main className="flex flex-col py-12 px-8 gap-12">
+    <main className="flex flex-col py-12 gap-12">
       {/* Small & Md screen: Control Buttons Row */}
-      <div className="flex md:hidden flex-col gap-8 ">
+      <div className="flex md:hidden flex-col gap-8 px-8">
         <div className="flex gap-6 items-top opacity-60">
           {filterButton}
           {prevAndNextButtons}
@@ -164,7 +180,7 @@ export default function Home() {
       </div>
 
       {/* > medium screen: Control Buttons Row */}
-      <div className="hidden md:flex gap-6 items-top">
+      <div className="hidden md:flex gap-6 items-top px-8 justify-center">
         {filterButton}
         {paletteSelectButton}
         {prevAndNextButtons}
@@ -173,62 +189,51 @@ export default function Home() {
 
       {/* ----------- */}
 
-      {/* Small & md screen */}
-      <div className="grid lg:hidden grid-cols-2 gap-1 gap-y-10 w-full">
-        <div className="col-span-1" style={{ height: 300 }}>
-          {barplot}
-        </div>
-        <div className="col-span-1" style={{ height: 300 }}>
-          {heatmap}
-        </div>
-        <div className="col-span-1" style={{ height: 300 }}>
-          {pieChart}
-        </div>
-        <div className="col-span-1" style={{ height: 300 }}>
-          {treemap}
-        </div>
-        <div className="col-span-1" style={{ height: 300 }}>
-          {bubbleplot}
-        </div>
-      </div>
-
-      {/* Large screen */}
-      <div className="hidden lg:grid xl:hidden grid-cols-3 gap-2 gap-y-10 w-full mt-20">
-        <div className="col-span-1" style={{ height: 300 }}>
-          {barplot}
-        </div>
-        <div className="col-span-1" style={{ height: 300 }}>
-          {treemap}
-        </div>
-        <div className="col-span-1" style={{ height: 300 }}>
-          {pieChart}
-        </div>
-        <div className="col-span-1" style={{ height: 500 }}>
-          {heatmap}
-        </div>
-
-        <div className="col-span-2" style={{ height: 500 }}>
-          {choropleth}
+      <div className="bg-gray-50 py-10 flex justify-center">
+        {/* Small & md screen */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 gap-y-10 w-full px-12 max-w-[1500px] ">
+          <div className="col-span-1" style={{ height: 280 }}>
+            {barplot}
+          </div>
+          <div className="col-span-1" style={{ height: 280 }}>
+            {heatmap}
+          </div>
+          <div className="col-span-1" style={{ height: 280 }}>
+            {pieChart}
+          </div>
+          <div className="col-span-1" style={{ height: 280 }}>
+            {treemap}
+          </div>
+          <div className="col-span-1" style={{ height: 280 }}>
+            {bubbleplot}
+          </div>
+          <div className="col-span-1" style={{ height: 280 }}>
+            {streamgraph}
+          </div>
+          <div className="col-span-1" style={{ height: 280 }}>
+            {choropleth}
+          </div>
         </div>
       </div>
 
-      {/* massive screen */}
-      <div className="hidden xl:grid grid-cols-4 gap-2 gap-y-10 w-full mt-20 max-w-[2300px]">
-        <div className="col-span-1" style={{ height: 300 }}>
-          {barplot}
-        </div>
-        <div className="col-span-1" style={{ height: 300 }}>
-          {heatmap}
-        </div>
-        <div className="col-span-2" style={{ height: 600 }}>
-          {pieChart}
-        </div>
-        <div className="col-span-1" style={{ height: 300 }}>
-          {treemap}
-        </div>
-        <div className="col-span-3" style={{ height: 700 }}>
-          {choropleth}
-        </div>
+      <div className="flex justify-center items-center flex-col">
+        <p className="max-w-lg text-center">🔥🔥</p>
+        <p className="max-w-md text-center">
+          Two lines of Python code to use the palette at home thanks to the{" "}
+          <a
+            href="https://github.com/JosephBARBIERDARNAL/pypalettes"
+            target="_blank"
+            className="gradient underline"
+          >
+            pypalette
+          </a>{" "}
+          library.
+        </p>
+        <div className="bg-gray-50 rounded-sm mt-2 p-4 text-xs leading-6">
+          <pre>
+            <code>{snippetPythonCode}</code>
+          </pre>
+        </div>{" "}
       </div>
     </main>
   );
