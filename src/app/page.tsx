@@ -163,7 +163,7 @@ export default function Home() {
       {/* ----------- */}
 
       {/* Small & md screen */}
-      <div className="grid lg:hidden grid-cols-2 gap-1 w-full">
+      <div className="grid lg:hidden grid-cols-2 gap-1 gap-y-10 w-full">
         <div className="col-span-1" style={{ height: 300 }}>
           {barplot}
         </div>
@@ -179,7 +179,7 @@ export default function Home() {
       </div>
 
       {/* Large screen */}
-      <div className="hidden lg:grid xl:hidden grid-cols-3 gap-2 w-full mt-20">
+      <div className="hidden lg:grid xl:hidden grid-cols-3 gap-2 gap-y-10 w-full mt-20">
         <div className="col-span-1" style={{ height: 300 }}>
           {barplot}
         </div>
@@ -199,7 +199,7 @@ export default function Home() {
       </div>
 
       {/* massive screen */}
-      <div className="hidden xl:grid grid-cols-4 gap-2 w-full mt-20 max-w-[2300px]">
+      <div className="hidden xl:grid grid-cols-4 gap-2 gap-y-10 w-full mt-20 max-w-[2300px]">
         <div className="col-span-1" style={{ height: 300 }}>
           {barplot}
         </div>

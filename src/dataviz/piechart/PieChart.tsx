@@ -13,9 +13,9 @@ type PieChartProps = {
   colorList: string[];
 };
 
-const MARGIN_X = 150;
-const MARGIN_Y = 50;
-const INFLEXION_PADDING = 20; // space between donut and label inflexion point
+const MARGIN_X = 12;
+const MARGIN_Y = 12;
+const INFLEXION_PADDING = 0; // space between donut and label inflexion point
 
 export const PieChart = ({ width, height, data, colorList }: PieChartProps) => {
   const radius = Math.min(width - 2 * MARGIN_X, height - 2 * MARGIN_Y) / 2;
@@ -48,38 +48,22 @@ export const PieChart = ({ width, height, data, colorList }: PieChartProps) => {
     const inflexionPoint = arcGenerator.centroid(inflexionInfo);
 
     const isRightLabel = inflexionPoint[0] > 0;
-    const labelPosX = inflexionPoint[0] + 50 * (isRightLabel ? 1 : -1);
+    const isTopLabel = inflexionPoint[1] > 0;
+    const labelPosX = inflexionPoint[0] + 5 * (isRightLabel ? 1 : -1);
+    const labelPosY = inflexionPoint[1] + 8 * (isTopLabel ? 1 : -1);
     const textAnchor = isRightLabel ? "start" : "end";
-    const label = grp.data.name + " (" + grp.value + ")";
 
     return (
       <g key={i}>
-        <path d={slicePath} fill={colorList[i]} />
-        <circle cx={centroid[0]} cy={centroid[1]} r={2} />
-        <line
-          x1={centroid[0]}
-          y1={centroid[1]}
-          x2={inflexionPoint[0]}
-          y2={inflexionPoint[1]}
-          stroke={"black"}
-          fill={"black"}
-        />
-        <line
-          x1={inflexionPoint[0]}
-          y1={inflexionPoint[1]}
-          x2={labelPosX}
-          y2={inflexionPoint[1]}
-          stroke={"black"}
-          fill={"black"}
-        />
+        <path d={slicePath} fill={colorList[i]} stroke="white" />
         <text
-          x={labelPosX + (isRightLabel ? 2 : -2)}
-          y={inflexionPoint[1]}
+          x={labelPosX}
+          y={labelPosY}
           textAnchor={textAnchor}
           dominantBaseline="middle"
-          fontSize={14}
+          fontSize={11}
         >
-          {label}
+          {grp.data.name}
         </text>
       </g>
     );
