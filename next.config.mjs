@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  basePath: "/dataviz-color-finder",
+  output: "export", // <=== enables static exports
+  reactStrictMode: true,
+};
 
-export default nextConfig;
+module.exports = nextConfig;
