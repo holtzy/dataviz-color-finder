@@ -46,14 +46,13 @@ export const Treemap = ({ width, height, data, colorList }: TreemapProps) => {
           textAnchor="start"
           alignmentBaseline="hanging"
           fill="white"
-          className="font-bold"
         >
           {leaf.data.name}
         </text>
         <text
           x={leaf.x0 + 3}
           y={leaf.y0 + 18}
-          fontSize={12}
+          fontSize={8}
           textAnchor="start"
           alignmentBaseline="hanging"
           fill="white"
@@ -67,7 +66,7 @@ export const Treemap = ({ width, height, data, colorList }: TreemapProps) => {
 
   return (
     <div>
-      <svg width={width} height={height}>
+      <svg width={width} height={height} shapeRendering={"crispEdges"}>
         {allShapes}
       </svg>
     </div>

@@ -62,7 +62,7 @@ export const Barplot = ({ width, height, data, colorList }: BarplotProps) => {
 
   return (
     <div>
-      <svg width={width} height={height}>
+      <svg width={width} height={height} shapeRendering={"crispEdges"}>
         <g
           width={boundsWidth}
           height={boundsHeight}

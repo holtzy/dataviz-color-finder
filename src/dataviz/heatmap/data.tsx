@@ -1,5 +1,5 @@
-const nCol = 10;
-const nRow = 5;
+const nCol = 26;
+const nRow = 26;
 
 const alphabet = [
   "A",
@@ -33,12 +33,23 @@ const alphabet = [
 type HeatmapData = { x: string; y: string; value: number }[];
 let heatmapData: HeatmapData = [];
 
+// Simple function to generate pseudo-random values with spatial continuity
+function generateNoiseValue(x: number, y: number): number {
+  const scale = 100; // Adjust the scale to change the "smoothness"
+  return (
+    (Math.sin(x / scale) + Math.sin(y / scale)) *
+      Math.random() *
+      Math.random() +
+    0.05 * Math.random()
+  ); // Range adjustment to [0, 40]
+}
+
 for (let x = 0; x < nCol; x++) {
   for (let y = 0; y < nRow; y++) {
     heatmapData.push({
       x: alphabet[x],
       y: alphabet[y],
-      value: Math.random() * 40,
+      value: generateNoiseValue(x, y),
     });
   }
 }
