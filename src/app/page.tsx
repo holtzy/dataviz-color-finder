@@ -105,43 +105,63 @@ export default function Home() {
     </GraphTile>
   );
 
+  const prevAndNextButtons = (
+    <div className="flex gap-2">
+      <Button variant={"outline"} onClick={switchToPreviousPalette}>
+        <ArrowLeft size={15} />
+      </Button>
+      <Button variant={"outline"} onClick={switchToNextPalette}>
+        <ArrowRight size={15} />
+      </Button>
+    </div>
+  );
+
+  const paletteSelectButton = (
+    <div className="flex flex-col">
+      <ColorPaletteSelectButton
+        paletteList={colorPaletteList}
+        selectedPaletteId={selectedPaletteId}
+        setSelectedPaletteId={setSelectedPaletteId}
+      />
+      <div className="flex gap-2 pt-2 text-xs text-gray-500">
+        <span>Source: </span>
+        <span>{selectedColorObject.source}</span>
+        <Separator orientation="vertical" />
+        <span>{selectedColorList.length + " colors"}</span>
+        <Separator orientation="vertical" />
+        <span>Continuous</span>
+      </div>
+    </div>
+  );
+
+  const filterButton = (
+    <Button variant={"outline"}>
+      <Filter />
+    </Button>
+  );
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between py-12 px-2">
-      <div className="flex gap-6 items-top">
-        <Button variant={"outline"}>
-          <Filter />
-        </Button>
-
-        <div className="flex flex-col">
-          <ColorPaletteSelectButton
-            paletteList={colorPaletteList}
-            selectedPaletteId={selectedPaletteId}
-            setSelectedPaletteId={setSelectedPaletteId}
-          />
-          <div className="flex gap-2 pt-2 text-xs text-gray-500">
-            <span>Source: </span>
-            <span>{selectedColorObject.source}</span>
-            <Separator orientation="vertical" />
-            <span>{selectedColorList.length + " colors"}</span>
-            <Separator orientation="vertical" />
-            <span>Continuous</span>
-          </div>
+    <main className="flex flex-col py-12 px-2 gap-12">
+      {/* Small & Md screen: Control Buttons Row */}
+      <div className="flex md:hidden flex-col gap-8 ">
+        <div className="flex gap-6 items-top opacity-60">
+          {filterButton}
+          {prevAndNextButtons}
+          <ExportDialogButton selectedColorObject={selectedColorObject} />
         </div>
+        {paletteSelectButton}
+      </div>
 
-        <div className="flex gap-2">
-          <Button variant={"outline"} onClick={switchToPreviousPalette}>
-            <ArrowLeft size={15} />
-          </Button>
-          <Button variant={"outline"} onClick={switchToNextPalette}>
-            <ArrowRight size={15} />
-          </Button>
-        </div>
-
+      {/* > medium screen: Control Buttons Row */}
+      <div className="hidden md:flex gap-6 items-top">
+        {filterButton}
+        {paletteSelectButton}
+        {prevAndNextButtons}
         <ExportDialogButton selectedColorObject={selectedColorObject} />
       </div>
 
       {/* Small screen */}
-      <div className="grid sm:hidden grid-cols-2 gap-1 w-full mt-20">
+      <div className="grid md:hidden grid-cols-2 gap-1 w-full">
         <div className="col-span-1" style={{ height: 300 }}>
           {barplot}
         </div>
@@ -156,8 +176,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Medium screen */}
-      <div className="hidden md:grid lg:hidden grid-cols-4 gap-2 w-full mt-20">
+      {/* big screen */}
+      <div className="hidden lg:grid xl:hidden grid-cols-4 gap-2 w-full mt-20">
         <div className="col-span-1" style={{ height: 300 }}>
           {barplot}
         </div>
@@ -175,8 +195,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* big screen */}
-      <div className="hidden lg:grid grid-cols-4 gap-2 w-full mt-20">
+      {/* massive screen */}
+      <div className="hidden xl:grid grid-cols-4 gap-2 w-full mt-20 max-w-[2300px]">
         <div className="col-span-1" style={{ height: 300 }}>
           {barplot}
         </div>
