@@ -160,8 +160,10 @@ export default function Home() {
         <ExportDialogButton selectedColorObject={selectedColorObject} />
       </div>
 
-      {/* Small screen */}
-      <div className="grid md:hidden grid-cols-2 gap-1 w-full">
+      {/* ----------- */}
+
+      {/* Small & md screen */}
+      <div className="grid lg:hidden grid-cols-2 gap-1 w-full">
         <div className="col-span-1" style={{ height: 300 }}>
           {barplot}
         </div>
@@ -176,21 +178,22 @@ export default function Home() {
         </div>
       </div>
 
-      {/* big screen */}
-      <div className="hidden lg:grid xl:hidden grid-cols-4 gap-2 w-full mt-20">
+      {/* Large screen */}
+      <div className="hidden lg:grid xl:hidden grid-cols-3 gap-2 w-full mt-20">
         <div className="col-span-1" style={{ height: 300 }}>
           {barplot}
         </div>
         <div className="col-span-1" style={{ height: 300 }}>
-          {heatmap}
-        </div>
-        <div className="col-span-2" style={{ height: 600 }}>
-          {pieChart}
-        </div>
-        <div className="col-span-1" style={{ height: 300 }}>
           {treemap}
         </div>
-        <div className="col-span-3" style={{ height: 700 }}>
+        <div className="col-span-1" style={{ height: 300 }}>
+          {pieChart}
+        </div>
+        <div className="col-span-1" style={{ height: 500 }}>
+          {heatmap}
+        </div>
+
+        <div className="col-span-2" style={{ height: 500 }}>
           {choropleth}
         </div>
       </div>
