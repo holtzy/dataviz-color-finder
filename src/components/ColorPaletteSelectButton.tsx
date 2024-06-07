@@ -68,6 +68,7 @@ const PalettePreview = ({ palette }: { palette: ColorPalette }) => {
 
           return (
             <div
+              key={i}
               className="w-4 h-4 rounded-sm"
               style={{ backgroundColor: col }}
             />
