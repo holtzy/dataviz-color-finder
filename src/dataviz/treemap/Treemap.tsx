@@ -14,7 +14,7 @@ export const Treemap = ({ width, height, data, colorList }: TreemapProps) => {
     return d3.hierarchy(data).sum((d) => d.value);
   }, [data]);
 
-  // List of item of level 1 (just under root) & related color scale
+  // List of item of level 1  (just under root) & related color scale
   const firstLevelGroups = hierarchy?.children?.map((child) => child.data.name);
   var colorScale = d3
     .scaleOrdinal<string>()
