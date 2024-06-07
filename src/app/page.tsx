@@ -20,7 +20,7 @@ import { ResponsiveStreamgraph } from "@/dataviz/streamgraph/ResponsiveStreamgra
 import { dataStreamgraph } from "@/dataviz/streamgraph/data";
 import { ResponsiveTreemap } from "@/dataviz/treemap/ResponsiveTreemap";
 import { treemapData } from "@/dataviz/treemap/data";
-import { ArrowLeft, ArrowRight, Download, Filter } from "lucide-react";
+import { ArrowLeft, ArrowRight, Filter } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function Home() {

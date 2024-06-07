@@ -9,6 +9,7 @@ import { ColorPalette } from "@/data/color-palette-list";
 import { formatPaletteName } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
+import { useMemo } from "react";
 
 type ColorPaletteSelectButtonProps = {
   paletteList: ColorPalette[];
@@ -23,6 +24,16 @@ export const ColorPaletteSelectButton = ({
   setSelectedPaletteId,
   showMorePalette,
 }: ColorPaletteSelectButtonProps) => {
+  const selectItemList = useMemo(() => {
+    return paletteList.map((pal, i) => {
+      return (
+        <SelectItem value={String(i)} key={i}>
+          <PalettePreview palette={pal} />
+        </SelectItem>
+      );
+    });
+  }, [paletteList]);
+
   return (
     <Select
       onValueChange={(newPalette) => setSelectedPaletteId(Number(newPalette))}
@@ -35,13 +46,7 @@ export const ColorPaletteSelectButton = ({
       </SelectTrigger>
 
       <SelectContent>
-        {paletteList.map((pal, i) => {
-          return (
-            <SelectItem value={String(i)}>
-              <PalettePreview palette={pal} />
-            </SelectItem>
-          );
-        })}
+        {selectItemList}
         <Separator className="my-2" />
         <Button size={"sm"} onClick={showMorePalette} className="my-2 ml-8">
           Show more
