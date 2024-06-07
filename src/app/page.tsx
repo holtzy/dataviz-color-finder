@@ -6,34 +6,31 @@ import { GraphTile } from "@/components/GraphTile";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { colorPaletteList } from "@/data/color-palette-list";
-import { Barplot } from "@/dataviz/barplot/Barplot";
 import { ResponsiveBarplot } from "@/dataviz/barplot/ResponsiveBarplot";
 import { barplotData } from "@/dataviz/barplot/data";
 import { ResponsiveBubblePlot } from "@/dataviz/bubbleplot/ResponsiveBubblePlot";
 import { bubblePlotData } from "@/dataviz/bubbleplot/data";
-import { ChoroplethMap } from "@/dataviz/choropleth/ChoroplethMap";
 import { ResponsiveChoropleth } from "@/dataviz/choropleth/ResponsiveChoropleth";
 import { geoData, numData } from "@/dataviz/choropleth/data";
-import { Heatmap } from "@/dataviz/heatmap/Heatmap";
 import { ResponsiveHeatmap } from "@/dataviz/heatmap/ResponsiveHeatmap";
 import { heatmapData } from "@/dataviz/heatmap/data";
-import { PieChart } from "@/dataviz/piechart/PieChart";
 import { ResponsivePieChart } from "@/dataviz/piechart/ResponsivePieChart";
 import { pieData } from "@/dataviz/piechart/data";
 import { ResponsiveStreamgraph } from "@/dataviz/streamgraph/ResponsiveStreamgraph";
 import { dataStreamgraph } from "@/dataviz/streamgraph/data";
 import { ResponsiveTreemap } from "@/dataviz/treemap/ResponsiveTreemap";
-import { Treemap } from "@/dataviz/treemap/Treemap";
 import { treemapData } from "@/dataviz/treemap/data";
-import { getColorListFromString } from "@/lib/utils";
 import { ArrowLeft, ArrowRight, Download, Filter } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [selectedPaletteId, setSelectedPaletteId] = useState(0);
+  const [displayedNumber, setDisplayedNumber] = useState(100);
+
+  const filteredColorPaletteList = colorPaletteList.slice(0, displayedNumber);
 
   const selectedColorObject = colorPaletteList[selectedPaletteId];
-  const selectedColorList = getColorListFromString(selectedColorObject.palette);
+  const selectedColorList = selectedColorObject.palette;
 
   const snippetPythonCode = `
 from pypalettes import load_cmap
@@ -43,17 +40,21 @@ cmap = load_cmap("${selectedColorObject.name}")
   const switchToPreviousPalette = () => {
     const newId =
       selectedPaletteId - 1 < 0
-        ? colorPaletteList.length - 1
+        ? filteredColorPaletteList.length - 1
         : selectedPaletteId - 1;
     setSelectedPaletteId(newId);
   };
 
   const switchToNextPalette = () => {
     const newId =
-      selectedPaletteId + 2 > colorPaletteList.length
+      selectedPaletteId + 2 > filteredColorPaletteList.length
         ? 0
         : selectedPaletteId + 1;
     setSelectedPaletteId(newId);
+  };
+
+  const showMorePalette = () => {
+    setDisplayedNumber(displayedNumber + 200);
   };
 
   useEffect(() => {
@@ -146,9 +147,10 @@ cmap = load_cmap("${selectedColorObject.name}")
   const paletteSelectButton = (
     <div className="flex flex-col">
       <ColorPaletteSelectButton
-        paletteList={colorPaletteList}
+        paletteList={filteredColorPaletteList}
         selectedPaletteId={selectedPaletteId}
         setSelectedPaletteId={setSelectedPaletteId}
+        showMorePalette={showMorePalette}
       />
       <div className="flex gap-2 pt-2 text-xs text-gray-500">
         <span>Source: </span>

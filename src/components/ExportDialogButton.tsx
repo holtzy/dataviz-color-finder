@@ -9,7 +9,6 @@ import {
 import { Button } from "./ui/button";
 import { Download } from "lucide-react";
 import { ColorPalette } from "@/data/color-palette-list";
-import { getColorListFromString } from "@/lib/utils";
 
 export const ExportDialogButton = ({
   selectedColorObject,
@@ -40,9 +39,7 @@ cmap = load_cmap("${selectedColorObject.name}")
           <div className="bg-gray-200 rounded-sm mt-2 p-4 text-xs">
             <pre>
               <code>
-                {getColorListFromString(selectedColorObject.palette).map(
-                  (col) => "'" + col + "', "
-                )}
+                {selectedColorObject.palette.map((col) => "'" + col + "', ")}
               </code>
             </pre>
           </div>

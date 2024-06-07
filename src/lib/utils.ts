@@ -13,8 +13,4 @@ export const formatPaletteName = (name: string) => {
     .join(' '); // Join the array back into a single string
 }
 
-export const getColorListFromString = (colorString: string): string[] => {
-  return (JSON.parse(
-    colorString.replace(/'/g, '"')
-  ))
-}
+

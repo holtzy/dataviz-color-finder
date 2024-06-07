@@ -9,7 +9,6 @@ import {
 import { Button } from "./ui/button";
 import { Code } from "lucide-react";
 import { ColorPalette } from "@/data/color-palette-list";
-import { getColorListFromString } from "@/lib/utils";
 import { ChartType } from "@/dataviz/types";
 import { getBarplotCode } from "@/lib/get-chart-code-python";
 
