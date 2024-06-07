@@ -51,7 +51,7 @@ export const Barplot = ({ width, height, data, colorList }: BarplotProps) => {
           height={yScale.bandwidth()}
           opacity={1}
           stroke={"none"}
-          fill={colorList[i]}
+          fill={colorList[i] || "#f9fafb"}
           fillOpacity={0.9}
           rx={1}
           shapeRendering={"crispEdges"}

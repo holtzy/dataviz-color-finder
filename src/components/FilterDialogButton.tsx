@@ -98,12 +98,16 @@ export const FilterDialogButton = ({
         <div className="ml-6">
           <div className="flex flex-row gap-3">
             {[1, 2, 3, 4, 5, 6, 7].map((num) => {
-              return getCheckboxPaletteLength(num, "top");
+              return (
+                <div key={num}>{getCheckboxPaletteLength(num, "top")}</div>
+              );
             })}
           </div>
           <div className="flex flex-row gap-3 -mt-4">
             {[8, 9, 10, 11, 12, 13, 14].map((num) => {
-              return getCheckboxPaletteLength(num, "bottom");
+              return (
+                <div key={num}>{getCheckboxPaletteLength(num, "bottom")}</div>
+              );
             })}
           </div>
         </div>

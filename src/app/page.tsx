@@ -138,7 +138,7 @@ cmap = load_cmap("${selectedColorObject.name}")
   const choropleth = (
     <GraphTile chartType="choropleth" palette={selectedColorObject}>
       <ResponsiveChoropleth
-        geoData={geoData}
+        geoData={geoData as any}
         numData={numData}
         colorList={selectedColorList}
       />
@@ -243,7 +243,7 @@ cmap = load_cmap("${selectedColorObject.name}")
             target="_blank"
             className="gradient underline"
           >
-            pypalette
+            pypalettes
           </a>{" "}
           library.
         </p>
