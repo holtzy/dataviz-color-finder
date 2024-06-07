@@ -17,30 +17,35 @@ export const FilterDialogButton = ({
   enabledPaletteKinds,
   setEnabledPaletteKinds,
 }: FilterDialogButtonProps) => {
+  const getCheckboxPaletteKind = (type: PaletteKind) => {
+    return (
+      <div className="flex items-center space-x-2 my-3">
+        <Checkbox
+          checked={enabledPaletteKinds.includes(type)}
+          id="terms"
+          onCheckedChange={(isChecked) => {
+            const newList: PaletteKind[] = isChecked
+              ? [...enabledPaletteKinds, type]
+              : enabledPaletteKinds.filter((k) => k !== type);
+            setEnabledPaletteKinds(newList);
+          }}
+        />
+        <span className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+          {type}
+        </span>
+      </div>
+    );
+  };
+
   return (
     <Popover>
       <PopoverTrigger>
         <Filter />
       </PopoverTrigger>
       <PopoverContent>
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            checked={enabledPaletteKinds.includes("qualitative")}
-            id="terms"
-            onCheckedChange={(isChecked) => {
-              const newList: PaletteKind[] = isChecked
-                ? [...enabledPaletteKinds, "qualitative"]
-                : enabledPaletteKinds.filter((k) => k !== "qualitative");
-              setEnabledPaletteKinds(newList);
-            }}
-          />
-          <label
-            htmlFor="terms"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            Qualitative
-          </label>
-        </div>
+        {getCheckboxPaletteKind("qualitative")}
+        {getCheckboxPaletteKind("sequential")}
+        {getCheckboxPaletteKind("diverging")}
       </PopoverContent>
     </Popover>
   );
