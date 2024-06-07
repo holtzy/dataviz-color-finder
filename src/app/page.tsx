@@ -32,9 +32,14 @@ export default function Home() {
     ["qualitative", "diverging", "sequential"]
   );
 
+  const [enabledPaletteLength, setEnabledPaletteLength] = useState<number[]>([
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+  ]);
+
   const filteredColorPaletteList = colorPaletteList
     .slice(0, displayedNumber)
-    .filter((p) => enabledPaletteKinds.includes(p.kind));
+    .filter((p) => enabledPaletteKinds.includes(p.kind))
+    .filter((p) => enabledPaletteLength.includes(p.palette.length));
 
   const selectedColorObject = filteredColorPaletteList[selectedPaletteId];
   const selectedColorList = selectedColorObject.palette;
@@ -170,15 +175,22 @@ cmap = load_cmap("${selectedColorObject.name}")
     </div>
   );
 
+  const filterPaletteDialog = (
+    <FilterDialogButton
+      setEnabledPaletteKinds={setEnabledPaletteKinds}
+      enabledPaletteKinds={enabledPaletteKinds}
+      setEnabledPaletteLength={setEnabledPaletteLength}
+      enabledPaletteLength={enabledPaletteLength}
+      remainingPaletteNumber={filteredColorPaletteList.length}
+    />
+  );
+
   return (
     <main className="flex flex-col py-12 gap-12">
       {/* Small & Md screen: Control Buttons Row */}
       <div className="flex md:hidden flex-col gap-8 px-8">
         <div className="flex gap-6 items-top opacity-60">
-          <FilterDialogButton
-            setEnabledPaletteKinds={setEnabledPaletteKinds}
-            enabledPaletteKinds={enabledPaletteKinds}
-          />
+          {filterPaletteDialog}
           {prevAndNextButtons}
           <ExportDialogButton selectedColorObject={selectedColorObject} />
         </div>
@@ -187,10 +199,7 @@ cmap = load_cmap("${selectedColorObject.name}")
 
       {/* > medium screen: Control Buttons Row */}
       <div className="hidden md:flex gap-6 items-top px-8 justify-center">
-        <FilterDialogButton
-          setEnabledPaletteKinds={setEnabledPaletteKinds}
-          enabledPaletteKinds={enabledPaletteKinds}
-        />
+        {filterPaletteDialog}
         {paletteSelectButton}
         {prevAndNextButtons}
         <ExportDialogButton selectedColorObject={selectedColorObject} />
