@@ -1,8 +1,10 @@
+export type PaletteKind = "qualitative" | "diverging" | "sequential" | "null" | "unknown"
+
 export type ColorPalette = {
     name: string,
     palette: string[],
     source: string
-    kind: "qualitative" | "diverging" | "sequential" | "null" | "unknown"
+    kind: PaletteKind
 }
 
 export const colorPaletteList: ColorPalette[] = [

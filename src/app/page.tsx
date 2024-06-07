@@ -6,7 +6,7 @@ import { FilterDialogButton } from "@/components/FilterDialogButton";
 import { GraphTile } from "@/components/GraphTile";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { colorPaletteList } from "@/data/color-palette-list";
+import { PaletteKind, colorPaletteList } from "@/data/color-palette-list";
 import { ResponsiveBarplot } from "@/dataviz/barplot/ResponsiveBarplot";
 import { barplotData } from "@/dataviz/barplot/data";
 import { ResponsiveBubblePlot } from "@/dataviz/bubbleplot/ResponsiveBubblePlot";
@@ -28,15 +28,13 @@ export default function Home() {
   const [selectedPaletteId, setSelectedPaletteId] = useState(0);
   const [displayedNumber, setDisplayedNumber] = useState(100);
 
-  const [enabledPaletteType, setEnabledPaletteType] = useState([
-    "qualitative",
-    "diverging",
-    "sequential",
-  ]);
+  const [enabledPaletteKinds, setEnabledPaletteKinds] = useState<PaletteKind[]>(
+    ["qualitative", "diverging", "sequential"]
+  );
 
   const filteredColorPaletteList = colorPaletteList
     .slice(0, displayedNumber)
-    .filter((p) => enabledPaletteType.includes(p.kind));
+    .filter((p) => enabledPaletteKinds.includes(p.kind));
 
   const selectedColorObject = filteredColorPaletteList[selectedPaletteId];
   const selectedColorList = selectedColorObject.palette;
@@ -177,7 +175,10 @@ cmap = load_cmap("${selectedColorObject.name}")
       {/* Small & Md screen: Control Buttons Row */}
       <div className="flex md:hidden flex-col gap-8 px-8">
         <div className="flex gap-6 items-top opacity-60">
-          <FilterDialogButton />
+          <FilterDialogButton
+            setEnabledPaletteKinds={setEnabledPaletteKinds}
+            enabledPaletteKinds={enabledPaletteKinds}
+          />
           {prevAndNextButtons}
           <ExportDialogButton selectedColorObject={selectedColorObject} />
         </div>
@@ -186,7 +187,10 @@ cmap = load_cmap("${selectedColorObject.name}")
 
       {/* > medium screen: Control Buttons Row */}
       <div className="hidden md:flex gap-6 items-top px-8 justify-center">
-        <FilterDialogButton />
+        <FilterDialogButton
+          setEnabledPaletteKinds={setEnabledPaletteKinds}
+          enabledPaletteKinds={enabledPaletteKinds}
+        />
         {paletteSelectButton}
         {prevAndNextButtons}
         <ExportDialogButton selectedColorObject={selectedColorObject} />
