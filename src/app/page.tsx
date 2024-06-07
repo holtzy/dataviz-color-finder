@@ -2,6 +2,7 @@
 
 import { ColorPaletteSelectButton } from "@/components/ColorPaletteSelectButton";
 import { ExportDialogButton } from "@/components/ExportDialogButton";
+import { FilterDialogButton } from "@/components/FilterDialogButton";
 import { GraphTile } from "@/components/GraphTile";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -27,9 +28,17 @@ export default function Home() {
   const [selectedPaletteId, setSelectedPaletteId] = useState(0);
   const [displayedNumber, setDisplayedNumber] = useState(100);
 
-  const filteredColorPaletteList = colorPaletteList.slice(0, displayedNumber);
+  const [enabledPaletteType, setEnabledPaletteType] = useState([
+    "qualitative",
+    "diverging",
+    "sequential",
+  ]);
 
-  const selectedColorObject = colorPaletteList[selectedPaletteId];
+  const filteredColorPaletteList = colorPaletteList
+    .slice(0, displayedNumber)
+    .filter((p) => enabledPaletteType.includes(p.kind));
+
+  const selectedColorObject = filteredColorPaletteList[selectedPaletteId];
   const selectedColorList = selectedColorObject.palette;
 
   const snippetPythonCode = `
@@ -158,15 +167,9 @@ cmap = load_cmap("${selectedColorObject.name}")
         <Separator orientation="vertical" />
         <span>{selectedColorList.length + " colors"}</span>
         <Separator orientation="vertical" />
-        <span>Continuous</span>
+        <span>{selectedColorObject.kind}</span>
       </div>
     </div>
-  );
-
-  const filterButton = (
-    <Button variant={"outline"}>
-      <Filter />
-    </Button>
   );
 
   return (
@@ -174,7 +177,7 @@ cmap = load_cmap("${selectedColorObject.name}")
       {/* Small & Md screen: Control Buttons Row */}
       <div className="flex md:hidden flex-col gap-8 px-8">
         <div className="flex gap-6 items-top opacity-60">
-          {filterButton}
+          <FilterDialogButton />
           {prevAndNextButtons}
           <ExportDialogButton selectedColorObject={selectedColorObject} />
         </div>
@@ -183,7 +186,7 @@ cmap = load_cmap("${selectedColorObject.name}")
 
       {/* > medium screen: Control Buttons Row */}
       <div className="hidden md:flex gap-6 items-top px-8 justify-center">
-        {filterButton}
+        <FilterDialogButton />
         {paletteSelectButton}
         {prevAndNextButtons}
         <ExportDialogButton selectedColorObject={selectedColorObject} />
