@@ -29,7 +29,7 @@ export const Treemap = ({ width, height, data, colorList }: TreemapProps) => {
   const allShapes = root.leaves().map((leaf, i) => {
     const parentName = leaf.parent?.data.name;
     return (
-      <g key={leaf.id}>
+      <g key={i}>
         <rect
           x={leaf.x0}
           y={leaf.y0}

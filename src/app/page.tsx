@@ -6,6 +6,8 @@ import { FilterDialogButton } from "@/components/FilterDialogButton";
 import { GraphTile } from "@/components/GraphTile";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 import { PaletteKind, colorPaletteList } from "@/data/color-palette-list";
 import { ResponsiveBarplot } from "@/dataviz/barplot/ResponsiveBarplot";
 import { barplotData } from "@/dataviz/barplot/data";
@@ -35,6 +37,10 @@ export default function Home() {
   const [enabledPaletteLength, setEnabledPaletteLength] = useState<number[]>([
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
   ]);
+
+  const [isNextToastAllowed, setIsNextToastAllowed] = useState(true);
+
+  const { toast } = useToast();
 
   const filteredColorPaletteList = colorPaletteList
     .slice(0, displayedNumber)
@@ -150,7 +156,34 @@ cmap = load_cmap("${selectedColorObject.name}")
       <Button variant={"outline"} onClick={switchToPreviousPalette}>
         <ArrowLeft size={15} />
       </Button>
-      <Button variant={"outline"} onClick={switchToNextPalette}>
+      <Button
+        variant={"outline"}
+        onClick={() => {
+          {
+            isNextToastAllowed &&
+              toast({
+                title: "Pro Tip 🔥",
+                description: (
+                  <>
+                    <p>Use your keyboard!</p>
+                    <div className="flex gap-2 items-center mt-1">
+                      <div className="border border-gray-200 rounded-sm p-2">
+                        <ArrowLeft size="14" />
+                      </div>
+                      <div className="border border-gray-200 rounded-sm p-2">
+                        <ArrowRight size="14" />
+                      </div>
+                      to switch palette
+                    </div>
+                  </>
+                ),
+                action: <ToastAction altText="Got it">Got it!</ToastAction>,
+              });
+          }
+          switchToNextPalette();
+          setIsNextToastAllowed(false);
+        }}
+      >
         <ArrowRight size={15} />
       </Button>
     </div>
