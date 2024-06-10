@@ -36,7 +36,7 @@ df.drop('Unnamed: 0', axis=1, inplace=True)
 # create a color palette
 cmap = load_cmap('${palette}', type='continuous')
 
-# create a bar plot
+# create a heatmap
 fig, ax = plt.subplots(figsize=(11,8), dpi=300)
 sns.heatmap(df, cmap=cmap, ax=ax, cbar=False)
 plt.show()`.trim();
@@ -57,7 +57,7 @@ df = pd.read_csv("https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gall
 # create a color palette
 cmap = load_cmap('${palette}')
 
-# create a bar plot
+# create a Pie chart
 fig, ax = plt.subplots(figsize=(11,8), dpi=300)
 ax.pie(df["value"], labels=df["name"], colors=[cmap(i) for i in range(len(df))])
 plt.show()`.trim();
@@ -82,7 +82,7 @@ cmap = load_cmap('${palette}')
 unique_hues = df['continent'].unique()
 palette = [cmap(i / len(unique_hues)) for i in range(len(unique_hues))]
 
-# create a bar plot
+# create a bubble chart
 fig, ax = plt.subplots(figsize=(11, 8), dpi=300)
 ax.spines[['top', 'right']].set_visible(False)
 sns.scatterplot(
@@ -124,7 +124,7 @@ cmap = load_cmap('${palette}')
 category_codes, unique_categories = pd.factorize(df['parent'])
 colors = [cmap(code / (len(unique_categories) - 1)) for code in category_codes]
 
-# create a bar plot
+# create a treemap
 fig, ax = plt.subplots(figsize=(11,8), dpi=300)
 ax.set_axis_off()
 squarify.plot(

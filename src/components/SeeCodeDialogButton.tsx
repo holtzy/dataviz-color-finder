@@ -10,7 +10,15 @@ import { Button } from "./ui/button";
 import { Code } from "lucide-react";
 import { ColorPalette } from "@/data/color-palette-list";
 import { ChartType } from "@/dataviz/types";
-import { getBarplotCode } from "@/lib/get-chart-code-python";
+import {
+  getBarplotCode,
+  getBubblePlotCode,
+  getChoroplethCode,
+  getHeatmapCode,
+  getPieChartCode,
+  getStreamchartCode,
+  getTreemapCode,
+} from "@/lib/get-chart-code-python";
 
 type SeeCodeDialogButtonProps = {
   palette: ColorPalette;
@@ -21,8 +29,34 @@ export const SeeCodeDialogButton = ({
   palette,
   chartType,
 }: SeeCodeDialogButtonProps) => {
-  // TODO: switch case for other chart type
-  const code = getBarplotCode(palette.name);
+  console.log("chartType", chartType);
+
+  let code = "";
+  switch (chartType) {
+    case "barplot":
+      code = getBarplotCode(palette.name);
+      break;
+    case "treemap":
+      code = getTreemapCode(palette.name);
+      break;
+    case "choropleth":
+      code = getChoroplethCode(palette.name);
+      break;
+    case "bubble":
+      code = getBubblePlotCode(palette.name);
+      break;
+    case "streamgraph":
+      code = getStreamchartCode(palette.name);
+      break;
+    case "heatmap":
+      code = getHeatmapCode(palette.name);
+      break;
+    case "pie":
+      code = getPieChartCode(palette.name);
+      break;
+  }
+
+  console.log("code", code);
 
   return (
     <Dialog>
