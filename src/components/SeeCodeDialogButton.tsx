@@ -22,8 +22,6 @@ export const SeeCodeDialogButton = ({
   palette,
   chartType,
 }: SeeCodeDialogButtonProps) => {
-  console.log("chartType", chartType);
-
   let code = "";
   switch (chartType) {
     case "barplot":

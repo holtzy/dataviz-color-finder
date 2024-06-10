@@ -23,7 +23,7 @@ import { ResponsiveStreamgraph } from "@/dataviz/streamgraph/ResponsiveStreamgra
 import { dataStreamgraph } from "@/dataviz/streamgraph/data";
 import { ResponsiveTreemap } from "@/dataviz/treemap/ResponsiveTreemap";
 import { treemapData } from "@/dataviz/treemap/data";
-import { ArrowLeft, ArrowRight, Filter } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -280,7 +280,7 @@ cmap = load_cmap("${selectedColorObject.name}")
           </a>{" "}
           library.
         </p>
-        <div className="bg-gray-50 rounded-sm mt-2 p-4 text-xs leading-6">
+        <div className="bg-gray-50 rounded-sm mt-2 p-4 text-xs leading-5">
           <pre>
             <code>{snippetPythonCode}</code>
           </pre>
