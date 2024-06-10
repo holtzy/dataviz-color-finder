@@ -14,9 +14,9 @@ type GraphTileProps = {
 
 export const GraphTile = ({ children, chartType, palette }: GraphTileProps) => {
   return (
-    <div className="group relative w-full h-full border border-gray-100 hover:border-black p-1 rounded-sm bg-white">
+    <div className="group relative w-full h-full border border-gray-100 hover:border-black p-1 rounded-sm bg-white hover:cursor-pointer">
       <div className="w-full h-full group-hover:opacity-50">{children}</div>
-      <div className="absolute top-0 right-0 m-2  gap-2 hidden group-hover:flex">
+      <div className="absolute top-0 right-0 m-2 gap-2 opacity-0 group-hover:opacity-100 flex">
         <ExpandChartDialogButton>{children}</ExpandChartDialogButton>
         <SeeCodeDialogButton chartType={chartType} palette={palette} />
       </div>

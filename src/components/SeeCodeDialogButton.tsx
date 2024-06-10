@@ -1,11 +1,3 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import { Code } from "lucide-react";
 import { ColorPalette } from "@/data/color-palette-list";
@@ -19,6 +11,7 @@ import {
   getStreamchartCode,
   getTreemapCode,
 } from "@/lib/get-chart-code-python";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 type SeeCodeDialogButtonProps = {
   palette: ColorPalette;
@@ -56,28 +49,29 @@ export const SeeCodeDialogButton = ({
       break;
   }
 
-  console.log("code", code);
-
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Popover>
+      <PopoverTrigger asChild>
         <Button>
           <Code size={15} />
         </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[800px] py-20">
-        <DialogHeader>
-          <DialogTitle>Python code</DialogTitle>
-          <DialogDescription>
+      </PopoverTrigger>
+      <PopoverContent className="py-4 min-w-[600px]">
+        <div>
+          <p className="font-bold text-lg">Python code</p>
+          <p className="text-sm">
             Copy paste this code to get the same chart at home!
-          </DialogDescription>
-        </DialogHeader>
-        <div className="bg-gray-200 rounded-sm mt-2 p-4 text-xs">
+          </p>
+        </div>
+        <div
+          className="bg-gray-200 rounded-sm mt-2 p-4 text-xs"
+          style={{ overflow: "scroll" }}
+        >
           <pre>
             <code>{code}</code>
           </pre>
         </div>{" "}
-      </DialogContent>
-    </Dialog>
+      </PopoverContent>
+    </Popover>
   );
 };

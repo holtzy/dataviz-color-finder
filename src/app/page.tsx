@@ -242,7 +242,7 @@ cmap = load_cmap("${selectedColorObject.name}")
 
       <div className="bg-gray-50 py-10 flex justify-center">
         {/* Small & md screen */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 gap-y-10 w-full px-12 max-w-[1500px] ">
+        <div className="grid grid-cols1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 gap-y-10 w-full px-12 max-w-[1500px] ">
           <div className="col-span-1" style={{ height: 280 }}>
             {barplot}
           </div>
