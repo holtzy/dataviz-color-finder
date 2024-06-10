@@ -7,6 +7,12 @@ import { GraphTile } from "@/components/GraphTile";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ToastAction } from "@/components/ui/toast";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useToast } from "@/components/ui/use-toast";
 import { PaletteKind, colorPaletteList } from "@/data/color-palette-list";
 import { ResponsiveBarplot } from "@/dataviz/barplot/ResponsiveBarplot";
@@ -151,41 +157,53 @@ cmap = load_cmap("${selectedColorObject.name}")
     </GraphTile>
   );
 
+  const helpText = (
+    <>
+      <p>Use your keyboard!</p>
+      <div className="flex gap-2 items-center mt-1">
+        <div className="border border-gray-200 rounded-sm p-2">
+          <ArrowLeft size="14" />
+        </div>
+        <div className="border border-gray-200 rounded-sm p-2">
+          <ArrowRight size="14" />
+        </div>
+        to switch palette
+      </div>
+    </>
+  );
+
   const prevAndNextButtons = (
     <div className="flex gap-2">
       <Button variant={"outline"} onClick={switchToPreviousPalette}>
         <ArrowLeft size={15} />
       </Button>
-      <Button
-        variant={"outline"}
-        onClick={() => {
-          {
-            isNextToastAllowed &&
-              toast({
-                title: "Pro Tip 🔥",
-                description: (
-                  <>
-                    <p>Use your keyboard!</p>
-                    <div className="flex gap-2 items-center mt-1">
-                      <div className="border border-gray-200 rounded-sm p-2">
-                        <ArrowLeft size="14" />
-                      </div>
-                      <div className="border border-gray-200 rounded-sm p-2">
-                        <ArrowRight size="14" />
-                      </div>
-                      to switch palette
-                    </div>
-                  </>
-                ),
-                action: <ToastAction altText="Got it">Got it!</ToastAction>,
-              });
-          }
-          switchToNextPalette();
-          setIsNextToastAllowed(false);
-        }}
-      >
-        <ArrowRight size={15} />
-      </Button>
+
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger style={{ height: 40 }}>
+            <Button
+              variant={"outline"}
+              onClick={() => {
+                {
+                  isNextToastAllowed &&
+                    toast({
+                      title: "Pro Tip 🔥",
+                      description: helpText,
+                      action: (
+                        <ToastAction altText="Got it">Got it!</ToastAction>
+                      ),
+                    });
+                }
+                switchToNextPalette();
+                setIsNextToastAllowed(false);
+              }}
+            >
+              <ArrowRight size={15} />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{helpText}</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     </div>
   );
 
