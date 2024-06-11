@@ -5,43 +5,53 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ColorPalette } from "@/data/color-palette-list";
+import { ColorPalette, colorPaletteList } from "@/data/color-palette-list";
 import { formatPaletteName } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 type ColorPaletteSelectButtonProps = {
-  paletteList: ColorPalette[];
-  selectedPaletteId: number;
-  setSelectedPaletteId: (newPalette: number) => void;
-  showMorePalette: () => void;
+  filteredColorPaletteList: ColorPalette[];
+  selectedPalette: string;
+  setSelectedPalette: (newPalette: string) => void;
 };
 
 export const ColorPaletteSelectButton = ({
-  paletteList,
-  selectedPaletteId,
-  setSelectedPaletteId,
-  showMorePalette,
+  filteredColorPaletteList,
+  selectedPalette,
+  setSelectedPalette,
 }: ColorPaletteSelectButtonProps) => {
+  // For perf reasons, I cannot display the 2500 palettes by default.
+  // So I display only 100 of them, and then show a "Show more" button
+  const [displayedNumber, setDisplayedNumber] = useState(100);
+  const showMorePalette = () => {
+    setDisplayedNumber(displayedNumber + 200);
+  };
+
   const selectItemList = useMemo(() => {
-    return paletteList.map((pal, i) => {
+    return filteredColorPaletteList.slice(0, displayedNumber).map((pal, i) => {
       return (
         <SelectItem value={String(i)} key={i}>
           <PalettePreview palette={pal} />
         </SelectItem>
       );
     });
-  }, [paletteList]);
+  }, [displayedNumber, filteredColorPaletteList]);
 
   return (
     <Select
-      onValueChange={(newPalette) => setSelectedPaletteId(Number(newPalette))}
-      value={paletteList[selectedPaletteId].name}
+      onValueChange={(newPalette) => setSelectedPalette(newPalette)}
+      value={selectedPalette}
     >
       <SelectTrigger className="w-[400px]">
         <SelectValue>
-          <PalettePreview palette={paletteList[selectedPaletteId]} />
+          <PalettePreview
+            palette={
+              colorPaletteList.find((c) => c.name === selectedPalette) ||
+              colorPaletteList[0]
+            }
+          />
         </SelectValue>
       </SelectTrigger>
 

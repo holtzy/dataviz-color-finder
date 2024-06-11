@@ -32,7 +32,6 @@ import { ResponsiveTreemap } from "@/dataviz/treemap/ResponsiveTreemap";
 import { treemapData } from "@/dataviz/treemap/data";
 import {
   ColorBlindnessType,
-  Mod,
   getColorBlindnessSimulation,
   hexToGrayscale,
   modD,
@@ -41,10 +40,16 @@ import {
 } from "@/lib/get-color-blindness-simulation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
-  const [selectedPaletteId, setSelectedPaletteId] = useState(0);
-  const [displayedNumber, setDisplayedNumber] = useState(100);
+  // User can enter a palette name in the URL to see it directly
+  const searchParams = useSearchParams();
+  const urlPalette = searchParams.get("palette");
+
+  const [selectedPalette, setSelectedPalette] = useState(
+    urlPalette || "Acadia"
+  );
 
   const [selectedColorBlindness, setSelectedColorBlindness] =
     useState<ColorBlindnessType>("Normal vision");
@@ -52,21 +57,20 @@ export default function Home() {
   const [enabledPaletteKinds, setEnabledPaletteKinds] = useState<PaletteKind[]>(
     ["qualitative", "diverging", "sequential"]
   );
-
   const [enabledPaletteLength, setEnabledPaletteLength] = useState<number[]>([
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
   ]);
 
   const [isNextToastAllowed, setIsNextToastAllowed] = useState(true);
-
   const { toast } = useToast();
 
   const filteredColorPaletteList = colorPaletteList
-    .slice(0, displayedNumber)
     .filter((p) => enabledPaletteKinds.includes(p.kind))
     .filter((p) => enabledPaletteLength.includes(p.palette.length));
 
-  const selectedColorObject = filteredColorPaletteList[selectedPaletteId];
+  const selectedColorObject =
+    colorPaletteList.find((c) => c.name === selectedPalette) ||
+    colorPaletteList[0];
 
   const selectedColorList = selectedColorObject.palette.map((c) => {
     return selectedColorBlindness === "Protanopia"
@@ -86,23 +90,21 @@ cmap = load_cmap("${selectedColorObject.name}")
 `.trim();
 
   const switchToPreviousPalette = () => {
+    const currentId = filteredColorPaletteList.findIndex(
+      (c) => c.name === selectedPalette
+    );
     const newId =
-      selectedPaletteId - 1 < 0
-        ? filteredColorPaletteList.length - 1
-        : selectedPaletteId - 1;
-    setSelectedPaletteId(newId);
+      currentId - 1 < 0 ? filteredColorPaletteList.length - 1 : currentId - 1;
+    setSelectedPalette(filteredColorPaletteList[newId].name);
   };
 
   const switchToNextPalette = () => {
+    const currentId = filteredColorPaletteList.findIndex(
+      (c) => c.name === selectedPalette
+    );
     const newId =
-      selectedPaletteId + 2 > filteredColorPaletteList.length
-        ? 0
-        : selectedPaletteId + 1;
-    setSelectedPaletteId(newId);
-  };
-
-  const showMorePalette = () => {
-    setDisplayedNumber(displayedNumber + 200);
+      currentId + 2 > filteredColorPaletteList.length ? 0 : currentId + 1;
+    setSelectedPalette(filteredColorPaletteList[newId].name);
   };
 
   useEffect(() => {
@@ -234,10 +236,9 @@ cmap = load_cmap("${selectedColorObject.name}")
   const paletteSelectButton = (
     <div className="flex flex-col">
       <ColorPaletteSelectButton
-        paletteList={filteredColorPaletteList}
-        selectedPaletteId={selectedPaletteId}
-        setSelectedPaletteId={setSelectedPaletteId}
-        showMorePalette={showMorePalette}
+        filteredColorPaletteList={filteredColorPaletteList}
+        selectedPalette={selectedPalette}
+        setSelectedPalette={setSelectedPalette}
       />
       <div className="flex gap-2 pt-2 text-xs text-gray-500">
         <span>Source: </span>

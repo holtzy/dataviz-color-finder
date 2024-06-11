@@ -2,7 +2,11 @@
 /*Color.Vision.Simulate : v0.1
 -----------------------------
 Freely available for non-commercial use by Matthew Wickline and the
-Human-Computer Interaction Resource Network ( http://hcirn.com/ ).*/
+Human-Computer Interaction Resource Network ( http://hcirn.com/ ).
+
+Found here: https://codepen.io/squints/pen/Vvqzoo
+
+*/
 
 export type ColorBlindnessType = "Protanopia" | "Deuteranopia" | "Tritanopia" | "Normal vision" | "Grey scale"
 export const colorBlindnessTypes: ColorBlindnessType[] = ["Normal vision", "Protanopia", "Deuteranopia", "Tritanopia", "Grey scale"]
