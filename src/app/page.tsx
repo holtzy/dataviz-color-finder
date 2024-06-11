@@ -1,5 +1,6 @@
 "use client";
 
+import { ColorBlindnessSelectButton } from "@/components/ColorBlindnessSelectButton";
 import { ColorPaletteSelectButton } from "@/components/ColorPaletteSelectButton";
 import { ExportDialogButton } from "@/components/ExportDialogButton";
 import { FilterDialogButton } from "@/components/FilterDialogButton";
@@ -29,12 +30,24 @@ import { ResponsiveStreamgraph } from "@/dataviz/streamgraph/ResponsiveStreamgra
 import { dataStreamgraph } from "@/dataviz/streamgraph/data";
 import { ResponsiveTreemap } from "@/dataviz/treemap/ResponsiveTreemap";
 import { treemapData } from "@/dataviz/treemap/data";
+import {
+  ColorBlindnessType,
+  Mod,
+  getColorBlindnessSimulation,
+  hexToGrayscale,
+  modD,
+  modP,
+  modT,
+} from "@/lib/get-color-blindness-simulation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [selectedPaletteId, setSelectedPaletteId] = useState(0);
   const [displayedNumber, setDisplayedNumber] = useState(100);
+
+  const [selectedColorBlindness, setSelectedColorBlindness] =
+    useState<ColorBlindnessType>("Normal vision");
 
   const [enabledPaletteKinds, setEnabledPaletteKinds] = useState<PaletteKind[]>(
     ["qualitative", "diverging", "sequential"]
@@ -54,7 +67,18 @@ export default function Home() {
     .filter((p) => enabledPaletteLength.includes(p.palette.length));
 
   const selectedColorObject = filteredColorPaletteList[selectedPaletteId];
-  const selectedColorList = selectedColorObject.palette;
+
+  const selectedColorList = selectedColorObject.palette.map((c) => {
+    return selectedColorBlindness === "Protanopia"
+      ? getColorBlindnessSimulation(c, modP)
+      : selectedColorBlindness === "Deuteranopia"
+      ? getColorBlindnessSimulation(c, modD)
+      : selectedColorBlindness === "Tritanopia"
+      ? getColorBlindnessSimulation(c, modT)
+      : selectedColorBlindness === "Grey scale"
+      ? hexToGrayscale(c)
+      : c;
+  });
 
   const snippetPythonCode = `
 from pypalettes import load_cmap
@@ -236,6 +260,13 @@ cmap = load_cmap("${selectedColorObject.name}")
     />
   );
 
+  const colorBlindnessButton = (
+    <ColorBlindnessSelectButton
+      selectedColorBlindness={selectedColorBlindness}
+      setSelectedColorBlindness={setSelectedColorBlindness}
+    />
+  );
+
   return (
     <main className="flex flex-col py-12 gap-12">
       {/* Small & Md screen: Control Buttons Row */}
@@ -244,6 +275,7 @@ cmap = load_cmap("${selectedColorObject.name}")
           {filterPaletteDialog}
           {prevAndNextButtons}
           <ExportDialogButton selectedColorObject={selectedColorObject} />
+          {colorBlindnessButton}
         </div>
         {paletteSelectButton}
       </div>
@@ -254,6 +286,7 @@ cmap = load_cmap("${selectedColorObject.name}")
         {paletteSelectButton}
         {prevAndNextButtons}
         <ExportDialogButton selectedColorObject={selectedColorObject} />
+        {colorBlindnessButton}
       </div>
 
       {/* ----------- */}

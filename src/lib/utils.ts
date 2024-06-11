@@ -13,4 +13,3 @@ export const formatPaletteName = (name: string) => {
     .join(' '); // Join the array back into a single string
 }
 
-
