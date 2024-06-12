@@ -32,7 +32,7 @@ export const ColorPaletteSelectButton = ({
   const selectItemList = useMemo(() => {
     return filteredColorPaletteList.slice(0, displayedNumber).map((pal, i) => {
       return (
-        <SelectItem value={String(i)} key={i}>
+        <SelectItem value={pal.name} key={i}>
           <PalettePreview palette={pal} />
         </SelectItem>
       );
@@ -40,16 +40,14 @@ export const ColorPaletteSelectButton = ({
   }, [displayedNumber, filteredColorPaletteList]);
 
   return (
-    <Select
-      onValueChange={(newPalette) => setSelectedPalette(newPalette)}
-      value={selectedPalette}
-    >
+    <Select onValueChange={setSelectedPalette} value={selectedPalette}>
       <SelectTrigger className="w-[400px]">
         <SelectValue>
           <PalettePreview
             palette={
-              colorPaletteList.find((c) => c.name === selectedPalette) ||
-              colorPaletteList[0]
+              colorPaletteList.find(
+                (c) => c.name.toLowerCase() === selectedPalette.toLowerCase()
+              ) || colorPaletteList[0]
             }
           />
         </SelectValue>

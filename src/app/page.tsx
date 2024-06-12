@@ -69,8 +69,9 @@ export default function Home() {
     .filter((p) => enabledPaletteLength.includes(p.palette.length));
 
   const selectedColorObject =
-    colorPaletteList.find((c) => c.name === selectedPalette) ||
-    colorPaletteList[0];
+    colorPaletteList.find(
+      (c) => c.name.toLowerCase() === selectedPalette.toLowerCase()
+    ) || colorPaletteList[0];
 
   const selectedColorList = selectedColorObject.palette.map((c) => {
     return selectedColorBlindness === "Protanopia"
