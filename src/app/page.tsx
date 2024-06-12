@@ -41,6 +41,8 @@ import {
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { ShareButton } from "@/components/ShareButton";
+import Confetti from "@/components/Confetti";
 
 export default function Home() {
   // User can enter a palette name in the URL to see it directly
@@ -252,6 +254,8 @@ cmap = load_cmap("${selectedColorObject.name}")
     </div>
   );
 
+  const shareButton = <ShareButton selectedColorObject={selectedColorObject} />;
+
   const filterPaletteDialog = (
     <FilterDialogButton
       setEnabledPaletteKinds={setEnabledPaletteKinds}
@@ -272,12 +276,13 @@ cmap = load_cmap("${selectedColorObject.name}")
   return (
     <main className="flex flex-col py-12 gap-12">
       {/* Small & Md screen: Control Buttons Row */}
-      <div className="flex md:hidden flex-col gap-8 px-8">
-        <div className="flex gap-6 items-top opacity-60">
+      <div className="flex md:hidden flex-col gap-2 px-2">
+        <div className="flex gap-1 items-top opacity-60">
           {filterPaletteDialog}
           {prevAndNextButtons}
           <ExportDialogButton selectedColorObject={selectedColorObject} />
           {colorBlindnessButton}
+          {shareButton}
         </div>
         {paletteSelectButton}
       </div>
@@ -289,6 +294,7 @@ cmap = load_cmap("${selectedColorObject.name}")
         {prevAndNextButtons}
         <ExportDialogButton selectedColorObject={selectedColorObject} />
         {colorBlindnessButton}
+        {shareButton}
       </div>
 
       {/* ----------- */}

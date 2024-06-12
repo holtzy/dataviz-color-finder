@@ -23,12 +23,10 @@ export const ColorBlindnessSelectButton = ({
 }: ColorBlindnessSelectButtonProps) => {
   const selectItemList = colorBlindnessTypes.map((c, i) => {
     return (
-      <>
-        <SelectItem value={c} key={i}>
-          {c}
-        </SelectItem>
+      <div key={i}>
+        <SelectItem value={c}>{c}</SelectItem>
         {(i === 0 || i === 3) && <Separator />}
-      </>
+      </div>
     );
   });
 
