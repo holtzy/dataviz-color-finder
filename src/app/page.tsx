@@ -39,7 +39,7 @@ import {
   modT,
 } from "@/lib/get-color-blindness-simulation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ShareButton } from "@/components/ShareButton";
 
