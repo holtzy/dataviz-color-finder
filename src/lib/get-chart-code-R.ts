@@ -118,7 +118,7 @@ library(ggplot2)
 # Geospatial data available at the geojson format
 tmp_geojson <- tempfile(fileext = ".geojson")
 download.file(
-   "https://raw.githubusercontent.com/JosephBARBIERDARNAL/Sandbox/main/pypalettes/data.geojson",
+   "https://raw.githubusercontent.com/holtzy/R-graph-gallery/DATA/world.geojson",
    tmp_geojson
 )
 my_sf <- read_sf(tmp_geojson)

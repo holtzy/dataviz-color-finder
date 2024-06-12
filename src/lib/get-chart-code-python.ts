@@ -149,7 +149,7 @@ import matplotlib.pyplot as plt
 from pypalettes import load_cmap
 
 # load the world dataset
-df = gpd.read_file('https://raw.githubusercontent.com/JosephBARBIERDARNAL/The-Python-Graph-Gallery/master/static/data/world.geojson')
+df = gpd.read_file('https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gallery/master/static/data/all_world.geojson')
 
 # create a color palette
 cmap = load_cmap('${palette}', type='continuous')
