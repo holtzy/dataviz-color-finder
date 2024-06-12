@@ -42,7 +42,6 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ShareButton } from "@/components/ShareButton";
-import Confetti from "@/components/Confetti";
 
 export default function Home() {
   // User can enter a palette name in the URL to see it directly
@@ -274,79 +273,77 @@ cmap = load_cmap("${selectedColorObject.name}")
   );
 
   return (
-    <Suspense>
-      <main className="flex flex-col py-12 gap-12">
-        {/* Small & Md screen: Control Buttons Row */}
-        <div className="flex md:hidden flex-col gap-2 px-2">
-          <div className="flex gap-1 items-top opacity-60">
-            {filterPaletteDialog}
-            {prevAndNextButtons}
-            <ExportDialogButton selectedColorObject={selectedColorObject} />
-            {colorBlindnessButton}
-            {shareButton}
-          </div>
-          {paletteSelectButton}
-        </div>
-
-        {/* > medium screen: Control Buttons Row */}
-        <div className="hidden md:flex gap-6 items-top px-8 justify-center">
+    <main className="flex flex-col py-12 gap-12">
+      {/* Small & Md screen: Control Buttons Row */}
+      <div className="flex md:hidden flex-col gap-2 px-2">
+        <div className="flex gap-1 items-top opacity-60">
           {filterPaletteDialog}
-          {paletteSelectButton}
           {prevAndNextButtons}
           <ExportDialogButton selectedColorObject={selectedColorObject} />
           {colorBlindnessButton}
           {shareButton}
         </div>
+        {paletteSelectButton}
+      </div>
 
-        {/* ----------- */}
+      {/* > medium screen: Control Buttons Row */}
+      <div className="hidden md:flex gap-6 items-top px-8 justify-center">
+        {filterPaletteDialog}
+        {paletteSelectButton}
+        {prevAndNextButtons}
+        <ExportDialogButton selectedColorObject={selectedColorObject} />
+        {colorBlindnessButton}
+        {shareButton}
+      </div>
 
-        <div className="bg-gray-50 py-10 flex justify-center">
-          {/* Small & md screen */}
-          <div className="grid grid-cols1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 gap-y-10 w-full px-12 max-w-[1500px] ">
-            <div className="col-span-1" style={{ height: 280 }}>
-              {barplot}
-            </div>
-            <div className="col-span-1" style={{ height: 280 }}>
-              {heatmap}
-            </div>
-            <div className="col-span-1" style={{ height: 280 }}>
-              {pieChart}
-            </div>
-            <div className="col-span-1" style={{ height: 280 }}>
-              {treemap}
-            </div>
-            <div className="col-span-1" style={{ height: 280 }}>
-              {bubbleplot}
-            </div>
-            <div className="col-span-1" style={{ height: 280 }}>
-              {streamgraph}
-            </div>
-            <div className="col-span-1" style={{ height: 280 }}>
-              {choropleth}
-            </div>
+      {/* ----------- */}
+
+      <div className="bg-gray-50 py-10 flex justify-center">
+        {/* Small & md screen */}
+        <div className="grid grid-cols1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 gap-y-10 w-full px-12 max-w-[1500px] ">
+          <div className="col-span-1" style={{ height: 280 }}>
+            {barplot}
+          </div>
+          <div className="col-span-1" style={{ height: 280 }}>
+            {heatmap}
+          </div>
+          <div className="col-span-1" style={{ height: 280 }}>
+            {pieChart}
+          </div>
+          <div className="col-span-1" style={{ height: 280 }}>
+            {treemap}
+          </div>
+          <div className="col-span-1" style={{ height: 280 }}>
+            {bubbleplot}
+          </div>
+          <div className="col-span-1" style={{ height: 280 }}>
+            {streamgraph}
+          </div>
+          <div className="col-span-1" style={{ height: 280 }}>
+            {choropleth}
           </div>
         </div>
+      </div>
 
-        <div className="flex justify-center items-center flex-col">
-          <p className="max-w-lg text-center">🔥🔥</p>
-          <p className="max-w-md text-center">
-            Two lines of Python code to use the palette at home thanks to the{" "}
-            <a
-              href="https://github.com/JosephBARBIERDARNAL/pypalettes"
-              target="_blank"
-              className="gradient underline"
-            >
-              pypalettes
-            </a>{" "}
-            library.
-          </p>
-          <div className="bg-gray-50 rounded-sm mt-2 p-4 text-xs leading-5">
-            <pre>
-              <code>{snippetPythonCode}</code>
-            </pre>
-          </div>{" "}
+      <div className="flex justify-center items-center flex-col">
+        <p className="max-w-lg text-center">🔥🔥</p>
+        <p className="max-w-md text-center">
+          Two lines of Python code to use the palette at home thanks to the{" "}
+          <a
+            href="https://github.com/JosephBARBIERDARNAL/pypalettes"
+            target="_blank"
+            className="gradient underline"
+          >
+            pypalettes
+          </a>{" "}
+          library.
+        </p>
+        <div className="bg-gray-50 rounded-sm mt-2 p-4 text-xs leading-5">
+          <pre>
+            <code>{snippetPythonCode}</code>
+          </pre>
         </div>
-      </main>
-    </Suspense>
+      </div>
+    </main>
   );
 }
