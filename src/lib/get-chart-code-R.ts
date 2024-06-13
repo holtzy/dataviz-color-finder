@@ -6,7 +6,7 @@ library(ggplot2)
 library(paletteer)
 
 # load the data
-data <- read.csv2("https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gallery/master/static/data/simple-barplot.csv")
+data <- read.csv("https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gallery/master/static/data/simple-barplot.csv")
 data$name <- factor(data$name, levels = rev(data$name))
 data <- mutate(data, name = fct_reorder(name, value))
 
