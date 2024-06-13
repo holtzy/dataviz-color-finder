@@ -6,7 +6,7 @@ library(ggplot2)
 library(paletteer)
 
 # load the data
-data <- read_csv("https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gallery/master/static/data/simple-barplot.csv")
+data <- read.csv2("https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gallery/master/static/data/simple-barplot.csv")
 data$name <- factor(data$name, levels = rev(data$name))
 data <- mutate(data, name = fct_reorder(name, value))
 
@@ -65,7 +65,7 @@ library(ggplot2)
 library(paletteer)
 
 # sample data
-data <- read.csv("https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gallery/master/static/data/simple-piechart.csv")
+data <- read.csv2("https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gallery/master/static/data/simple-piechart.csv")
 
 # create the pie chart
 ggplot(data, aes(x = "", y = value, fill = name)) +
@@ -87,7 +87,7 @@ library(ggplot2)
 library(paletteer)
 
 # load the data
-df <- read.csv("https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gallery/master/static/data/simple-scatterplot.csv")
+df <- read.csv2("https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gallery/master/static/data/simple-scatterplot.csv")
 
 # create the bubble plot
 ggplot(df, aes(x = gdpPercap, y = lifeExp, size = pop, color = continent)) +
