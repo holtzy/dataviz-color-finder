@@ -28,7 +28,7 @@ export const AxisBottomLinear = ({
   }, [xScale]);
 
   const offset = ticks.length > 0 ? ticks?.[1].value - ticks?.[0].value : 0;
-  console.log("offset", offset);
+
   return (
     <>
       {ticks.map(({ value, xOffset }) => (
@@ -60,6 +60,7 @@ export const AxisBottomLinear = ({
         </g>
       ))}
 
+      {/* Secondary grid */}
       {datavizTheme.hasSecondaryGrid &&
         ticks.map(({ value, xOffset }) => (
           <g

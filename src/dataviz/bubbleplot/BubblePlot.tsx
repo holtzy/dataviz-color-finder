@@ -1,5 +1,8 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 import * as d3 from "d3";
+import { DatavizTheme } from "../theme";
+import { AxisBottomLinear } from "../axes/AxisBottomLinear";
+import { AxisLeftLinear } from "../axes/AxisLeftLinear";
 
 const MARGIN = { top: 10, right: 10, bottom: 20, left: 30 };
 const BUBBLE_MIN_SIZE = 4;
@@ -15,6 +18,7 @@ type BubblePlotProps = {
     pop: number;
   }[];
   colorList: string[];
+  datavizTheme: DatavizTheme;
 };
 
 export const BubblePlot = ({
@@ -22,10 +26,10 @@ export const BubblePlot = ({
   height,
   data,
   colorList,
+  datavizTheme,
 }: BubblePlotProps) => {
   // Layout. The div size is set by the given props.
   // The bounds (=area inside the axis) is calculated by substracting the margins
-  const axesRef = useRef(null);
   const boundsWidth = width - MARGIN.right - MARGIN.left;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
 
@@ -35,7 +39,11 @@ export const BubblePlot = ({
       number,
       number
     ];
-    return d3.scaleLinear().domain([min, max]).range([boundsHeight, 0]).nice();
+    return d3
+      .scaleLinear()
+      .domain([datavizTheme.hasNumericAxisGap ? min - 4 : min, max])
+      .range([boundsHeight, 0])
+      .nice();
   }, [data, height]);
 
   const xScale = useMemo(() => {
@@ -59,24 +67,6 @@ export const BubblePlot = ({
       .domain([min, max])
       .range([BUBBLE_MIN_SIZE, BUBBLE_MAX_SIZE]);
   }, [data, width]);
-
-  // Render the X and Y axis using d3.js, not react
-  useEffect(() => {
-    const svgElement = d3.select(axesRef.current);
-    svgElement.selectAll("*").remove();
-
-    const xAxisGenerator = d3.axisBottom(xScale).ticks(5);
-    svgElement
-      .append("g")
-      .attr("transform", "translate(0," + boundsHeight + ")")
-      .call(xAxisGenerator);
-
-    const yAxisGenerator = d3.axisLeft(yScale);
-    svgElement
-      .append("g")
-      .attr("transform", "translate(,0)")
-      .call(yAxisGenerator);
-  }, [xScale, yScale, boundsHeight, boundsWidth]);
 
   // Build the shapes
   const allShapes = data
@@ -105,14 +95,32 @@ export const BubblePlot = ({
           height={boundsHeight}
           transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}
         >
+          <rect
+            x={0}
+            y={0}
+            width={boundsWidth}
+            height={boundsHeight}
+            stroke={datavizTheme.boundsRectColor}
+            fill={datavizTheme.backgroundColor}
+            strokeWidth={0.5}
+            opacity={1}
+          />
+          <AxisLeftLinear
+            yScale={yScale}
+            width={boundsWidth}
+            pixelsPerTick={60}
+            datavizTheme={datavizTheme}
+          />
+          <g transform={`translate(0, ${boundsHeight})`}>
+            <AxisBottomLinear
+              xScale={xScale}
+              height={boundsHeight}
+              pixelsPerTick={80}
+              datavizTheme={datavizTheme}
+            />
+          </g>
           {allShapes}
         </g>
-        <g
-          width={boundsWidth}
-          height={boundsHeight}
-          ref={axesRef}
-          transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}
-        />
       </svg>
     </div>
   );

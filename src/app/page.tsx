@@ -133,12 +133,15 @@ export default function Home() {
     };
   }, [switchToPreviousPalette]);
 
+  const datavizTheme =
+    selectedLanguage === "r" ? ggplot2Theme : matplotlibTheme;
+
   const barplot = (
     <GraphTile chartType="barplot" palette={selectedColorObject}>
       <ResponsiveBarplot
         data={barplotData}
         colorList={selectedColorList}
-        datavizTheme={selectedLanguage === "r" ? ggplot2Theme : matplotlibTheme}
+        datavizTheme={datavizTheme}
       />
     </GraphTile>
   );
@@ -166,6 +169,7 @@ export default function Home() {
       <ResponsiveBubblePlot
         data={bubblePlotData}
         colorList={selectedColorList}
+        datavizTheme={datavizTheme}
       />
     </GraphTile>
   );

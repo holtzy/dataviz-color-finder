@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useDimensions } from "../use-dimensions";
 import { BubblePlot } from "./BubblePlot";
+import { DatavizTheme } from "../theme";
 
 type ResponsiveBubblePlotProps = {
   data: {
@@ -10,6 +11,7 @@ type ResponsiveBubblePlotProps = {
     pop: number;
   }[];
   colorList: string[];
+  datavizTheme: DatavizTheme;
 };
 
 export const ResponsiveBubblePlot = (props: ResponsiveBubblePlotProps) => {
