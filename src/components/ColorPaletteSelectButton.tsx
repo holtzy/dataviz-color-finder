@@ -64,7 +64,7 @@ export const ColorPaletteSelectButton = ({
   );
 };
 
-const PalettePreview = ({ palette }: { palette: ColorPalette }) => {
+export const PalettePreview = ({ palette }: { palette: ColorPalette }) => {
   return (
     <div className="flex gap-2">
       <span>{formatPaletteName(palette.name)}</span>
