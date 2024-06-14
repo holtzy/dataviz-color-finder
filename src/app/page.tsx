@@ -47,10 +47,14 @@ export default function Home() {
   // User can enter a palette name in the URL to see it directly
   const searchParams = useSearchParams();
   const urlPalette = searchParams.get("palette");
+  const urlLanguage = searchParams.get("language");
 
   const [selectedPalette, setSelectedPalette] = useState(
     urlPalette || "Acadia"
   );
+
+  const selectedLanguage = urlLanguage || "python";
+  console.log("selectedLAnguage", selectedLanguage);
 
   const [selectedColorBlindness, setSelectedColorBlindness] =
     useState<ColorBlindnessType>("Normal vision");
