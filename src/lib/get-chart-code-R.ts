@@ -1,34 +1,34 @@
-export const getBarplotCode = (palette: string) => {
+export const getBarplotCodeR = (palette: string) => {
 
     const code = `
 # Load the required libraries
 library(ggplot2)
 library(paletteer)
+library(readr)
+library(dplyr)
+library(forcats)
 
 # Create a sample dataset
-data <- read_csv(
-   "https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gallery/master/static/data/simple-barplot.csv",
-   show_col_types = FALSE
-)
+data <- read_csv("https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gallery/master/static/data/simple-barplot.csv")
 
 # Reorder the factor levels to display the bars in the correct order
-data$name <- factor(data$name, levels = rev(data$name))
 data <- mutate(data, name = fct_reorder(name, value))
 
 # Create the plot
 ggplot(data, aes(x = value, y = name, fill = name)) +
-   geom_col() +
-   scale_fill_paletteer_d("${palette}") +
-   theme(
-      axis.title.x = element_blank(),
-      axis.title.y = element_blank(),
-      legend.position = "none"
-   )`.trim();
+    geom_col() +
+    scale_fill_paletteer_d("${palette}") +
+    theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    legend.position = "none"
+    )
+`.trim();
 
     return code
 }
 
-export const getHeatmapCode = (palette: string) => {
+export const getHeatmapCodeR = (palette: string) => {
 
     const code = `
 # Load required libraries
@@ -61,7 +61,7 @@ ggplot(data_long, aes(x = Var2, y = Var1, fill = value)) +
     return code
 }
 
-export const getPieChartCode = (palette: string) => {
+export const getPieChartCodeR = (palette: string) => {
 
     const code = `
 # Load the required libraries
@@ -84,7 +84,7 @@ ggplot(data, aes(x = "", y = value, fill = name)) +
     return code
 }
 
-export const getBubblePlotCode = (palette: string) => {
+export const getBubblePlotCodeR = (palette: string) => {
 
     const code = `
 # Load necessary libraries
@@ -103,7 +103,7 @@ ggplot(df, aes(x = gdpPercap, y = lifeExp, size = pop, color = continent)) +
     return code
 }
 
-export const getTreemapCode = (palette: string) => {
+export const getTreemapCodeR = (palette: string) => {
 
     const code = `
 # Load necessary libraries
@@ -128,7 +128,7 @@ ggplot(df, aes(area = value, fill = parent, label = name)) +
     return code
 }
 
-export const getChoroplethCode = (palette: string) => {
+export const getChoroplethCodeR = (palette: string) => {
 
     const code = `
 # Load necessary libraries
@@ -159,7 +159,7 @@ ggplot(my_sf) +
     return code
 }
 
-export const getStreamchartCode = (palette: string) => {
+export const getStreamchartCodeR = (palette: string) => {
 
     const code = `
 # Load necessary libraries

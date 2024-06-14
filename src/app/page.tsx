@@ -137,7 +137,11 @@ export default function Home() {
     selectedLanguage === "r" ? ggplot2Theme : matplotlibTheme;
 
   const barplot = (
-    <GraphTile chartType="barplot" palette={selectedColorObject}>
+    <GraphTile
+      chartType="barplot"
+      palette={selectedColorObject}
+      selectedLanguage={selectedLanguage}
+    >
       <ResponsiveBarplot
         data={barplotData}
         colorList={selectedColorList}
@@ -147,25 +151,41 @@ export default function Home() {
   );
 
   const heatmap = (
-    <GraphTile chartType="heatmap" palette={selectedColorObject}>
+    <GraphTile
+      chartType="heatmap"
+      palette={selectedColorObject}
+      selectedLanguage={selectedLanguage}
+    >
       <ResponsiveHeatmap data={heatmapData} colorList={selectedColorList} />
     </GraphTile>
   );
 
   const pieChart = (
-    <GraphTile chartType="pie" palette={selectedColorObject}>
+    <GraphTile
+      chartType="pie"
+      palette={selectedColorObject}
+      selectedLanguage={selectedLanguage}
+    >
       <ResponsivePieChart data={pieData} colorList={selectedColorList} />
     </GraphTile>
   );
 
   const treemap = (
-    <GraphTile chartType="treemap" palette={selectedColorObject}>
+    <GraphTile
+      chartType="treemap"
+      palette={selectedColorObject}
+      selectedLanguage={selectedLanguage}
+    >
       <ResponsiveTreemap data={treemapData} colorList={selectedColorList} />
     </GraphTile>
   );
 
   const bubbleplot = (
-    <GraphTile chartType="bubble" palette={selectedColorObject}>
+    <GraphTile
+      chartType="bubble"
+      palette={selectedColorObject}
+      selectedLanguage={selectedLanguage}
+    >
       <ResponsiveBubblePlot
         data={bubblePlotData}
         colorList={selectedColorList}
@@ -175,7 +195,11 @@ export default function Home() {
   );
 
   const streamgraph = (
-    <GraphTile chartType="streamgraph" palette={selectedColorObject}>
+    <GraphTile
+      chartType="streamgraph"
+      palette={selectedColorObject}
+      selectedLanguage={selectedLanguage}
+    >
       <ResponsiveStreamgraph
         data={dataStreamgraph}
         colorList={selectedColorList}
@@ -184,7 +208,11 @@ export default function Home() {
   );
 
   const choropleth = (
-    <GraphTile chartType="choropleth" palette={selectedColorObject}>
+    <GraphTile
+      chartType="choropleth"
+      palette={selectedColorObject}
+      selectedLanguage={selectedLanguage}
+    >
       <ResponsiveChoropleth
         geoData={geoData as any}
         numData={numData}

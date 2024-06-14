@@ -12,38 +12,74 @@ import {
   getTreemapCode,
 } from "@/lib/get-chart-code-python";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import {
+  getBarplotCodeR,
+  getBubblePlotCodeR,
+  getChoroplethCodeR,
+  getHeatmapCodeR,
+  getPieChartCodeR,
+  getStreamchartCodeR,
+  getTreemapCodeR,
+} from "@/lib/get-chart-code-R";
 
 type SeeCodeDialogButtonProps = {
   palette: ColorPalette;
   chartType: ChartType;
+  selectedLanguage: "r" | "python";
 };
 
 export const SeeCodeDialogButton = ({
   palette,
   chartType,
+  selectedLanguage,
 }: SeeCodeDialogButtonProps) => {
+  const pkg = palette.source.replace("The R package: {", "").replace("}", "");
+
+  const completePaletteName = pkg + "::" + palette.name;
+
   let code = "";
   switch (chartType) {
     case "barplot":
-      code = getBarplotCode(palette.name);
+      code =
+        selectedLanguage === "r"
+          ? getBarplotCodeR(completePaletteName)
+          : getBarplotCode(palette.name);
       break;
     case "treemap":
-      code = getTreemapCode(palette.name);
+      code =
+        selectedLanguage === "r"
+          ? getTreemapCodeR(completePaletteName)
+          : getTreemapCode(palette.name);
       break;
     case "choropleth":
-      code = getChoroplethCode(palette.name);
+      code =
+        selectedLanguage === "r"
+          ? getChoroplethCodeR(completePaletteName)
+          : getChoroplethCode(palette.name);
       break;
     case "bubble":
-      code = getBubblePlotCode(palette.name);
+      code =
+        selectedLanguage === "r"
+          ? getBubblePlotCodeR(completePaletteName)
+          : getBubblePlotCode(palette.name);
       break;
     case "streamgraph":
-      code = getStreamchartCode(palette.name);
+      code =
+        selectedLanguage === "r"
+          ? getStreamchartCodeR(completePaletteName)
+          : getStreamchartCode(palette.name);
       break;
     case "heatmap":
-      code = getHeatmapCode(palette.name);
+      code =
+        selectedLanguage === "r"
+          ? getHeatmapCodeR(completePaletteName)
+          : getHeatmapCode(palette.name);
       break;
     case "pie":
-      code = getPieChartCode(palette.name);
+      code =
+        selectedLanguage === "r"
+          ? getPieChartCodeR(completePaletteName)
+          : getPieChartCode(palette.name);
       break;
   }
 
