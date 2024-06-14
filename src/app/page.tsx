@@ -203,6 +203,7 @@ export default function Home() {
       <ResponsiveStreamgraph
         data={dataStreamgraph}
         colorList={selectedColorList}
+        datavizTheme={datavizTheme}
       />
     </GraphTile>
   );

@@ -49,7 +49,7 @@ export const AxisBottomLinear = ({
             style={{
               fontSize: "10px",
               textAnchor: "middle",
-              transform: "translateY(20px)",
+              transform: "translateY(15px)",
               fill: "black",
             }}
           >

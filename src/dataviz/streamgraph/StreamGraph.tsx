@@ -1,14 +1,17 @@
 import { useMemo } from "react";
 import * as d3 from "d3";
 import { curveCatmullRom } from "d3";
+import { DatavizTheme } from "../theme";
+import { AxisBottomLinear } from "../axes/AxisBottomLinear";
 
-const MARGIN = { top: 30, right: 30, bottom: 50, left: 50 };
+const MARGIN = { top: 10, right: 10, bottom: 20, left: 20 };
 
 type StreamGraphProps = {
   width: number;
   height: number;
   data: { [key: string]: number }[];
   colorList: string[];
+  datavizTheme: DatavizTheme;
 };
 
 export const StreamGraph = ({
@@ -16,6 +19,7 @@ export const StreamGraph = ({
   height,
   data,
   colorList,
+  datavizTheme,
 }: StreamGraphProps) => {
   // bounds = area inside the graph axis = calculated by substracting the margins
   const boundsWidth = width - MARGIN.right - MARGIN.left;
@@ -33,7 +37,6 @@ export const StreamGraph = ({
   const series = stackSeries(data);
 
   // Y axis
-  const max = 300; // todo
   const yScale = useMemo(() => {
     return d3.scaleLinear().domain([-200, 200]).range([boundsHeight, 0]);
   }, [data, height]);
@@ -74,30 +77,6 @@ export const StreamGraph = ({
     );
   });
 
-  const grid = xScale.ticks(5).map((value, i) => (
-    <g key={i}>
-      <line
-        x1={xScale(value)}
-        x2={xScale(value)}
-        y1={0}
-        y2={boundsHeight}
-        stroke="#808080"
-        opacity={0.2}
-      />
-      <text
-        x={xScale(value)}
-        y={boundsHeight + 10}
-        textAnchor="middle"
-        alignmentBaseline="central"
-        fontSize={9}
-        stroke="#808080"
-        opacity={0.8}
-      >
-        {value}
-      </text>
-    </g>
-  ));
-
   return (
     <div>
       <svg width={width} height={height}>
@@ -106,7 +85,24 @@ export const StreamGraph = ({
           height={boundsHeight}
           transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}
         >
-          {grid}
+          <rect
+            x={0}
+            y={0}
+            width={boundsWidth}
+            height={boundsHeight}
+            stroke={datavizTheme.boundsRectColor}
+            fill={datavizTheme.backgroundColor}
+            strokeWidth={0.5}
+            opacity={1}
+          />
+          <g transform={`translate(0, ${boundsHeight})`}>
+            <AxisBottomLinear
+              xScale={xScale}
+              height={boundsHeight}
+              pixelsPerTick={60}
+              datavizTheme={datavizTheme}
+            />
+          </g>
           {allPath}
         </g>
       </svg>
