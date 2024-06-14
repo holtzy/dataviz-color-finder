@@ -4,18 +4,25 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useEffect, useState } from "react";
 import Confetti from "./Confetti";
 
+type ShareButtonProps = {
+  selectedColorObject: ColorPalette;
+  selectedLanguage: "r" | "python";
+};
+
 export const ShareButton = ({
   selectedColorObject,
-}: {
-  selectedColorObject: ColorPalette;
-}) => {
+  selectedLanguage,
+}: ShareButtonProps) => {
   const [text, setText] = useState("Copy");
 
   useEffect(() => setText("Copy"), [selectedColorObject]);
 
   const targetUrl =
-    "https://python-graph-gallery.com/color-palette-finder/?palette=" +
-    selectedColorObject.name.toLowerCase();
+    selectedLanguage === "r"
+      ? "https://r-graph-gallery.com/color-palette-finder.html?palette=" +
+        selectedColorObject.name.toLowerCase()
+      : "https://python-graph-gallery.com/color-palette-finder/?palette=" +
+        selectedColorObject.name.toLowerCase();
 
   const copyButton = (
     <Button

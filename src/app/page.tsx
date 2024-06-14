@@ -291,7 +291,12 @@ export default function Home() {
     </div>
   );
 
-  const shareButton = <ShareButton selectedColorObject={selectedColorObject} />;
+  const shareButton = (
+    <ShareButton
+      selectedColorObject={selectedColorObject}
+      selectedLanguage={selectedLanguage}
+    />
+  );
 
   const filterPaletteDialog = (
     <FilterDialogButton
