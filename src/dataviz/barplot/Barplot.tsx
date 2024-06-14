@@ -22,7 +22,6 @@ export const Barplot = ({
   colorList,
   datavizTheme,
 }: BarplotProps) => {
-  console.log("datavizTheme", datavizTheme);
   // bounds = area inside the graph axis = calculated by substracting the margins
   const boundsWidth = width - MARGIN.right - MARGIN.left;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;

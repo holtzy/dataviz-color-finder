@@ -16,7 +16,7 @@ export const AxisLeftLinear = ({
   pixelsPerTick,
 }: AxisLeftProps) => {
   const range = yScale.range();
-  console.log("range", range);
+
   const ticks = useMemo(() => {
     const height = range[0] - range[1];
     const numberOfTicksTarget = Math.floor(height / pixelsPerTick);
@@ -26,8 +26,6 @@ export const AxisLeftLinear = ({
       yOffset: yScale(value),
     }));
   }, [yScale]);
-
-  console.log("y axis ticks", ticks);
 
   const offset =
     ticks.length > 0 ? (ticks?.[1].yOffset - ticks?.[0].yOffset) / 2 : 0;

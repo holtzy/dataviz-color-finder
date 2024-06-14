@@ -189,6 +189,7 @@ export default function Home() {
         geoData={geoData as any}
         numData={numData}
         colorList={selectedColorList}
+        datavizTheme={datavizTheme}
       />
     </GraphTile>
   );

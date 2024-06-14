@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import { FeatureCollection } from "geojson";
+import { DatavizTheme } from "../theme";
 
 const CENTER: [number, number] = [30, 65]; // The geographic center of your map
 
@@ -9,6 +10,7 @@ type ChoroplethMapProps = {
   geoData: FeatureCollection;
   numData: { code: string; value: number }[];
   colorList: string[];
+  datavizTheme: DatavizTheme;
 };
 
 export const ChoroplethMap = ({
@@ -17,6 +19,7 @@ export const ChoroplethMap = ({
   geoData,
   numData,
   colorList,
+  datavizTheme,
 }: ChoroplethMapProps) => {
   const colorScale = d3
     .scaleThreshold<number, string>()
@@ -76,6 +79,16 @@ export const ChoroplethMap = ({
   return (
     <div>
       <svg width={width} height={height}>
+        <rect
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+          stroke={datavizTheme.boundsRectColor}
+          fill={datavizTheme.backgroundColor}
+          strokeWidth={0.5}
+          opacity={1}
+        />
         {allSvgPaths}
       </svg>
     </div>

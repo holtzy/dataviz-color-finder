@@ -2,11 +2,13 @@ import { useRef } from "react";
 import { useDimensions } from "../use-dimensions";
 import { FeatureCollection } from "geojson";
 import { ChoroplethMap } from "./ChoroplethMap";
+import { DatavizTheme } from "../theme";
 
 type ResponsiveChoroplethProps = {
   geoData: FeatureCollection;
   numData: { code: string; value: number }[];
   colorList: string[];
+  datavizTheme: DatavizTheme;
 };
 
 export const ResponsiveChoropleth = (props: ResponsiveChoroplethProps) => {
