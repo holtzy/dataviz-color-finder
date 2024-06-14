@@ -22,6 +22,7 @@ import {
   getTreemapCodeR,
 } from "@/lib/get-chart-code-R";
 import { PalettePreview } from "./ColorPaletteSelectButton";
+import { CodeSnippet } from "./CodeSnippet";
 
 type SeeCodeDialogButtonProps = {
   palette: ColorPalette;
@@ -101,14 +102,7 @@ export const SeeCodeDialogButton = ({
           Copy paste this code to get the same chart at home!
         </p>
       </div>
-      <div
-        className="bg-gray-200 rounded-sm mt-2 p-4 text-xs"
-        style={{ overflow: "scroll" }}
-      >
-        <pre>
-          <code>{code}</code>
-        </pre>
-      </div>
+      <CodeSnippet code={code} />
     </>
   );
 
