@@ -43,6 +43,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ShareButton } from "@/components/ShareButton";
 import { GeneralPaletteUsageCodeSnippet } from "@/components/GeneralPaletteUsageCodeSnippet";
+import { ggplot2Theme, matplotlibTheme } from "@/dataviz/theme";
 
 export default function Home() {
   // User can enter a palette name in the URL to see it directly
@@ -134,7 +135,11 @@ export default function Home() {
 
   const barplot = (
     <GraphTile chartType="barplot" palette={selectedColorObject}>
-      <ResponsiveBarplot data={barplotData} colorList={selectedColorList} />
+      <ResponsiveBarplot
+        data={barplotData}
+        colorList={selectedColorList}
+        datavizTheme={selectedLanguage === "r" ? ggplot2Theme : matplotlibTheme}
+      />
     </GraphTile>
   );
 

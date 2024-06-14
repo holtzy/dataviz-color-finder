@@ -1,14 +1,18 @@
 import { useMemo } from "react";
 import { ScaleBand } from "d3";
+import { DatavizTheme } from "../theme";
 
 type AxisLeftProps = {
   yScale: ScaleBand<string>;
+  datavizTheme: DatavizTheme;
+  width: number;
 };
 
-// tick length
-const TICK_LENGTH = 6;
-
-export const AxisLeftBand = ({ yScale }: AxisLeftProps) => {
+export const AxisLeftBand = ({
+  yScale,
+  datavizTheme,
+  width,
+}: AxisLeftProps) => {
   const [min, max] = yScale.range();
 
   const ticks = useMemo(() => {
@@ -24,13 +28,14 @@ export const AxisLeftBand = ({ yScale }: AxisLeftProps) => {
       <path
         d={["M", 0, min, "L", 0, max].join(" ")}
         fill="none"
-        stroke="currentColor"
+        stroke={datavizTheme.axisLineColor}
       />
 
-      {/* Ticks and labels */}
+      {/* Ticks + labels + grid */}
       {ticks.map(({ value, yOffset }) => (
         <g key={value} transform={`translate(0, ${yOffset})`}>
-          <line x2={-TICK_LENGTH} stroke="currentColor" />
+          <line x2={-datavizTheme.tickLength} stroke="currentColor" />
+
           <text
             key={value}
             style={{
@@ -42,6 +47,8 @@ export const AxisLeftBand = ({ yScale }: AxisLeftProps) => {
           >
             {value}
           </text>
+
+          <line x2={width} stroke={datavizTheme.gridColor} />
         </g>
       ))}
     </>

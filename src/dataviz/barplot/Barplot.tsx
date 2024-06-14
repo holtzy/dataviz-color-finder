@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import * as d3 from "d3";
 import { AxisLeftBand } from "../axes/AxisLeftBand";
 import { AxisBottomLinear } from "../axes/AxisBottomLinear";
+import { DatavizTheme } from "../theme";
 
 const MARGIN = { top: 10, right: 10, bottom: 20, left: 55 };
 const BAR_PADDING = 0.2;
@@ -11,9 +12,17 @@ type BarplotProps = {
   height: number;
   data: { name: string; value: number }[];
   colorList: string[];
+  datavizTheme: DatavizTheme;
 };
 
-export const Barplot = ({ width, height, data, colorList }: BarplotProps) => {
+export const Barplot = ({
+  width,
+  height,
+  data,
+  colorList,
+  datavizTheme,
+}: BarplotProps) => {
+  console.log("datavizTheme", datavizTheme);
   // bounds = area inside the graph axis = calculated by substracting the margins
   const boundsWidth = width - MARGIN.right - MARGIN.left;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
@@ -31,7 +40,7 @@ export const Barplot = ({ width, height, data, colorList }: BarplotProps) => {
     const [min, max] = d3.extent(data.map((d) => d.value));
     return d3
       .scaleLinear()
-      .domain([0, max || 10])
+      .domain([datavizTheme.hasNumericAxisGap ? -4 : 0, max || 10])
       .range([0, boundsWidth - 20]);
   }, [data, width]);
 
@@ -52,7 +61,7 @@ export const Barplot = ({ width, height, data, colorList }: BarplotProps) => {
           opacity={1}
           stroke={"none"}
           fill={colorList[i] || "#f9fafb"}
-          fillOpacity={0.9}
+          fillOpacity={1}
           rx={1}
           shapeRendering={"crispEdges"}
         />
@@ -73,16 +82,22 @@ export const Barplot = ({ width, height, data, colorList }: BarplotProps) => {
             y={0}
             width={boundsWidth}
             height={boundsHeight}
-            stroke="black"
-            fill="transparent"
+            stroke={datavizTheme.boundsRectColor}
+            fill={datavizTheme.backgroundColor}
             strokeWidth={0.5}
+            opacity={1}
           />
-          <AxisLeftBand yScale={yScale} />
+          <AxisLeftBand
+            yScale={yScale}
+            datavizTheme={datavizTheme}
+            width={boundsWidth}
+          />
           <g transform={`translate(0, ${boundsHeight})`}>
             <AxisBottomLinear
               xScale={xScale}
               height={boundsHeight}
-              pixelsPerTick={40}
+              pixelsPerTick={60}
+              datavizTheme={datavizTheme}
             />
           </g>
           {allShapes}

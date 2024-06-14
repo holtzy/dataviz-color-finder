@@ -1,18 +1,19 @@
 import { useMemo } from "react";
 import { ScaleLinear } from "d3";
+import { DatavizTheme } from "../theme";
 
 type AxisBottomProps = {
   xScale: ScaleLinear<number, number>;
   pixelsPerTick: number;
   height: number;
+  datavizTheme: DatavizTheme;
 };
-
-const TICK_LENGTH = 5;
 
 export const AxisBottomLinear = ({
   xScale,
   pixelsPerTick,
   height,
+  datavizTheme,
 }: AxisBottomProps) => {
   const range = xScale.range();
 
@@ -26,6 +27,8 @@ export const AxisBottomLinear = ({
     }));
   }, [xScale]);
 
+  const offset = ticks.length > 0 ? ticks?.[1].value - ticks?.[0].value : 0;
+  console.log("offset", offset);
   return (
     <>
       {ticks.map(({ value, xOffset }) => (
@@ -34,7 +37,13 @@ export const AxisBottomLinear = ({
           transform={`translate(${xOffset}, 0)`}
           shapeRendering={"crispEdges"}
         >
-          <line y1={0} y2={TICK_LENGTH} stroke="black" strokeWidth={0.5} />
+          <line
+            y1={0}
+            y2={datavizTheme.tickLength}
+            stroke="black"
+            strokeWidth={0.5}
+          />
+
           <text
             key={value}
             style={{
@@ -46,8 +55,26 @@ export const AxisBottomLinear = ({
           >
             {value}
           </text>
+
+          <line y1={0} y2={-height} stroke={datavizTheme.gridColor} />
         </g>
       ))}
+
+      {datavizTheme.hasSecondaryGrid &&
+        ticks.map(({ value, xOffset }) => (
+          <g
+            key={value}
+            transform={`translate(${xOffset + offset}, 0)`}
+            shapeRendering={"crispEdges"}
+          >
+            <line
+              y1={0}
+              y2={-height}
+              stroke={datavizTheme.gridColor}
+              strokeWidth={0.5}
+            />
+          </g>
+        ))}
     </>
   );
 };
