@@ -42,6 +42,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ShareButton } from "@/components/ShareButton";
+import { GeneralPaletteUsageCodeSnippet } from "@/components/GeneralPaletteUsageCodeSnippet";
 
 export default function Home() {
   // User can enter a palette name in the URL to see it directly
@@ -53,8 +54,7 @@ export default function Home() {
     urlPalette || "Acadia"
   );
 
-  const selectedLanguage = urlLanguage || "python";
-  console.log("selectedLAnguage", selectedLanguage);
+  const selectedLanguage: "r" | "python" = urlLanguage === "r" ? "r" : "python";
 
   const [selectedColorBlindness, setSelectedColorBlindness] =
     useState<ColorBlindnessType>("Normal vision");
@@ -89,11 +89,6 @@ export default function Home() {
       ? hexToGrayscale(c)
       : c;
   });
-
-  const snippetPythonCode = `
-from pypalettes import load_cmap
-cmap = load_cmap("${selectedColorObject.name}")
-`.trim();
 
   const switchToPreviousPalette = () => {
     const currentId = filteredColorPaletteList.findIndex(
@@ -329,25 +324,10 @@ cmap = load_cmap("${selectedColorObject.name}")
         </div>
       </div>
 
-      <div className="flex justify-center items-center flex-col">
-        <p className="max-w-lg text-center">🔥🔥</p>
-        <p className="max-w-md text-center">
-          Two lines of Python code to use the palette at home thanks to the{" "}
-          <a
-            href="https://github.com/JosephBARBIERDARNAL/pypalettes"
-            target="_blank"
-            className="gradient underline"
-          >
-            pypalettes
-          </a>{" "}
-          library.
-        </p>
-        <div className="bg-gray-50 rounded-sm mt-2 p-4 text-xs leading-5">
-          <pre>
-            <code>{snippetPythonCode}</code>
-          </pre>
-        </div>
-      </div>
+      <GeneralPaletteUsageCodeSnippet
+        language={selectedLanguage}
+        paletteName={selectedColorObject.name}
+      />
     </main>
   );
 }
