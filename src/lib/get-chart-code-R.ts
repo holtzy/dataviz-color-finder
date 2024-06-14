@@ -19,7 +19,6 @@ data <- mutate(data, name = fct_reorder(name, value))
 ggplot(data, aes(x = value, y = name, fill = name)) +
    geom_col() +
    scale_fill_paletteer_d("${palette}") +
-   theme_minimal() +
    theme(
       axis.title.x = element_blank(),
       axis.title.y = element_blank(),
@@ -99,7 +98,6 @@ df <- read.csv("https://raw.githubusercontent.com/holtzy/The-Python-Graph-Galler
 ggplot(df, aes(x = gdpPercap, y = lifeExp, size = pop, color = continent)) +
    geom_point(size=10) +
    scale_color_paletteer_d("${palette}") +
-   theme_minimal() +
    theme(legend.position = "none")`.trim();
 
     return code
