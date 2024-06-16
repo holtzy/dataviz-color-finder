@@ -13,6 +13,7 @@ export const CodeSnippet = ({ code }: CodeSnippetProps) => {
   const copyButton = (
     <Button
       variant={"outline"}
+      size={"sm"}
       className="relative border inline"
       onClick={() => {
         navigator.clipboard.writeText(code);
@@ -31,11 +32,8 @@ export const CodeSnippet = ({ code }: CodeSnippetProps) => {
   );
 
   return (
-    <div
-      className="relative bg-gray-200 rounded-sm mt-2 p-4 text-xs"
-      style={{ overflow: "scroll" }}
-    >
-      <pre>
+    <div className="relative bg-gray-200 rounded-sm my-2 p-4 text-xs">
+      <pre style={{ overflow: "scroll" }}>
         <code>{code}</code>
       </pre>
 

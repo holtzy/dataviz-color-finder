@@ -11,6 +11,7 @@ type GraphTileProps = {
   chartType: ChartType;
   palette: ColorPalette;
   selectedLanguage: "r" | "python";
+  setAppOpacity: (opacity: number) => void;
 };
 
 export const GraphTile = ({
@@ -18,6 +19,7 @@ export const GraphTile = ({
   chartType,
   palette,
   selectedLanguage,
+  setAppOpacity,
 }: GraphTileProps) => {
   return (
     <div className="group relative w-full h-full border border-gray-100 hover:border-black p-1 rounded-sm bg-white hover:cursor-pointer">
@@ -28,6 +30,7 @@ export const GraphTile = ({
           chartType={chartType}
           palette={palette}
           selectedLanguage={selectedLanguage}
+          setAppOpacity={setAppOpacity}
         />
       </div>
 

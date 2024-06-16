@@ -2,16 +2,21 @@ import { Button } from "./ui/button";
 import { Download } from "lucide-react";
 import { ColorPalette } from "@/data/color-palette-list";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { CodeSnippet } from "./CodeSnippet";
 
 export const ExportDialogButton = ({
   selectedColorObject,
+  selectedLanguage,
 }: {
   selectedColorObject: ColorPalette;
+  selectedLanguage: "r" | "python";
 }) => {
   const snippetPythonCode = `
 from pypalettes import load_cmap
 cmap = load_cmap("${selectedColorObject.name}")
 `.trim();
+
+  const colorArrayString = selectedColorObject.palette.join(", ");
 
   return (
     <Popover>
@@ -27,13 +32,7 @@ cmap = load_cmap("${selectedColorObject.name}")
         </div>
         <div className="py-4 overflow-scroll">
           <div className="font-bold text-lg">Array of string:</div>
-          <div className="bg-gray-200 rounded-sm mt-2 p-4 text-xs">
-            <pre>
-              <code>
-                {selectedColorObject.palette.map((col) => "'" + col + "', ")}
-              </code>
-            </pre>
-          </div>
+          <CodeSnippet code={colorArrayString} />
 
           <br />
 
@@ -42,11 +41,7 @@ cmap = load_cmap("${selectedColorObject.name}")
             Note that you'll need to install the <code>pypalettes</code> library
             first.
           </p>
-          <div className="bg-gray-200 rounded-sm mt-2 p-4 text-xs leading-6">
-            <pre>
-              <code>{snippetPythonCode}</code>
-            </pre>
-          </div>
+          <CodeSnippet code={snippetPythonCode} />
 
           <br />
 

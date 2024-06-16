@@ -28,12 +28,14 @@ type SeeCodeDialogButtonProps = {
   palette: ColorPalette;
   chartType: ChartType;
   selectedLanguage: "r" | "python";
+  setAppOpacity: (opacity: number) => void;
 };
 
 export const SeeCodeDialogButton = ({
   palette,
   chartType,
   selectedLanguage,
+  setAppOpacity,
 }: SeeCodeDialogButtonProps) => {
   const pkg = palette.source.replace("The R package: {", "").replace("}", "");
   const completePaletteName = pkg + "::" + palette.name;
@@ -166,13 +168,13 @@ export const SeeCodeDialogButton = ({
   );
 
   return (
-    <Popover>
+    <Popover onOpenChange={(open) => setAppOpacity(open ? 0.3 : 1)}>
       <PopoverTrigger asChild>
         <Button>
           <Code size={15} />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="py-4 min-w-[600px]">
+      <PopoverContent className="py-4 min-w-[600px] shadow-2xl">
         {isPaletteNotAllowed ? popoverContentWarning : popoverContent}
       </PopoverContent>
     </Popover>

@@ -60,6 +60,8 @@ export default function Home() {
   const [selectedColorBlindness, setSelectedColorBlindness] =
     useState<ColorBlindnessType>("Normal vision");
 
+  const [appOpacity, setAppOpacity] = useState(1);
+
   const [enabledPaletteKinds, setEnabledPaletteKinds] = useState<PaletteKind[]>(
     ["qualitative", "diverging", "sequential"]
   );
@@ -141,6 +143,7 @@ export default function Home() {
       chartType="barplot"
       palette={selectedColorObject}
       selectedLanguage={selectedLanguage}
+      setAppOpacity={setAppOpacity}
     >
       <ResponsiveBarplot
         data={barplotData}
@@ -155,6 +158,7 @@ export default function Home() {
       chartType="heatmap"
       palette={selectedColorObject}
       selectedLanguage={selectedLanguage}
+      setAppOpacity={setAppOpacity}
     >
       <ResponsiveHeatmap data={heatmapData} colorList={selectedColorList} />
     </GraphTile>
@@ -165,6 +169,7 @@ export default function Home() {
       chartType="pie"
       palette={selectedColorObject}
       selectedLanguage={selectedLanguage}
+      setAppOpacity={setAppOpacity}
     >
       <ResponsivePieChart data={pieData} colorList={selectedColorList} />
     </GraphTile>
@@ -175,6 +180,7 @@ export default function Home() {
       chartType="treemap"
       palette={selectedColorObject}
       selectedLanguage={selectedLanguage}
+      setAppOpacity={setAppOpacity}
     >
       <ResponsiveTreemap data={treemapData} colorList={selectedColorList} />
     </GraphTile>
@@ -185,6 +191,7 @@ export default function Home() {
       chartType="bubble"
       palette={selectedColorObject}
       selectedLanguage={selectedLanguage}
+      setAppOpacity={setAppOpacity}
     >
       <ResponsiveBubblePlot
         data={bubblePlotData}
@@ -199,6 +206,7 @@ export default function Home() {
       chartType="streamgraph"
       palette={selectedColorObject}
       selectedLanguage={selectedLanguage}
+      setAppOpacity={setAppOpacity}
     >
       <ResponsiveStreamgraph
         data={dataStreamgraph}
@@ -213,6 +221,7 @@ export default function Home() {
       chartType="choropleth"
       palette={selectedColorObject}
       selectedLanguage={selectedLanguage}
+      setAppOpacity={setAppOpacity}
     >
       <ResponsiveChoropleth
         geoData={geoData as any}
@@ -315,14 +324,24 @@ export default function Home() {
     />
   );
 
+  const exportButton = (
+    <ExportDialogButton
+      selectedColorObject={selectedColorObject}
+      selectedLanguage={selectedLanguage}
+    />
+  );
+
   return (
-    <main className="flex flex-col py-12 gap-12">
+    <main
+      className="flex flex-col py-12 gap-12"
+      style={{ opacity: appOpacity }}
+    >
       {/* Small & Md screen: Control Buttons Row */}
       <div className="flex md:hidden flex-col gap-2 px-2">
         <div className="flex gap-1 items-top opacity-60">
           {filterPaletteDialog}
           {prevAndNextButtons}
-          <ExportDialogButton selectedColorObject={selectedColorObject} />
+          {exportButton}
           {colorBlindnessButton}
           {shareButton}
         </div>
@@ -334,7 +353,7 @@ export default function Home() {
         {filterPaletteDialog}
         {paletteSelectButton}
         {prevAndNextButtons}
-        <ExportDialogButton selectedColorObject={selectedColorObject} />
+        {exportButton}
         {colorBlindnessButton}
         {shareButton}
       </div>
