@@ -23,6 +23,7 @@ import {
 } from "@/lib/get-chart-code-R";
 import { PalettePreview } from "./ColorPaletteSelectButton";
 import { CodeSnippet } from "./CodeSnippet";
+import { HorizontalSeparator } from "./HorizontalSeparator";
 
 type SeeCodeDialogButtonProps = {
   palette: ColorPalette;
@@ -100,8 +101,9 @@ export const SeeCodeDialogButton = ({
         <p className="font-bold text-lg">
           {(selectedLanguage === "r" ? "R" : "Python") + " code"}
         </p>
+        <HorizontalSeparator />
         <p className="text-sm">
-          Copy paste this code to get the same chart at home!
+          Copy & paste this code to get the same chart at home!
         </p>
       </div>
       <CodeSnippet code={code} />
@@ -109,12 +111,12 @@ export const SeeCodeDialogButton = ({
   );
 
   const popoverContentWarning = (
-    <div className="px-8 py-8">
+    <div>
       <p className="font-bold text-lg">
         ⚠️ Palette not suitable for this chart
       </p>
-      <hr className="max-w-96 mt-4" />
-      <p className="mt-4">
+      <HorizontalSeparator />
+      <p>
         You're trying to use a <b>qualitative</b> palette on a graph that
         requires a <b>continuous</b> palette.
       </p>
@@ -140,8 +142,8 @@ export const SeeCodeDialogButton = ({
         How could you use this to encode a numeric variable? That would be
         unreadable 😔.
       </p>
-      <hr className="max-w-96 mt-4" />
-      <p className="mt-4">
+      <HorizontalSeparator />
+      <p>
         To prevent it,{" "}
         <a href="https://r-graph-gallery.com/package/paletteer.html">
           <u>paleteer</u>
@@ -158,7 +160,7 @@ export const SeeCodeDialogButton = ({
         href="https://r-graph-gallery.com/ggplot2-color.html"
         className={
           buttonVariants({ variant: "default", size: "sm" }) +
-          " no-decoration mt-4"
+          " no-decoration mt-8"
         }
         target="_blank"
       >
@@ -174,7 +176,7 @@ export const SeeCodeDialogButton = ({
           <Code size={15} />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="py-4 min-w-[600px] shadow-2xl">
+      <PopoverContent className="py-12 px-8 min-w-[600px] shadow-2xl border border-black">
         {isPaletteNotAllowed ? popoverContentWarning : popoverContent}
       </PopoverContent>
     </Popover>
