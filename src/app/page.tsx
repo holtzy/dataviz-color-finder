@@ -304,6 +304,7 @@ export default function Home() {
     <ShareButton
       selectedColorObject={selectedColorObject}
       selectedLanguage={selectedLanguage}
+      setAppOpacity={setAppOpacity}
     />
   );
 

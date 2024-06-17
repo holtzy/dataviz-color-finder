@@ -21,9 +21,9 @@ import {
   getStreamchartCodeR,
   getTreemapCodeR,
 } from "@/lib/get-chart-code-R";
-import { PalettePreview } from "./ColorPaletteSelectButton";
 import { CodeSnippet } from "./CodeSnippet";
 import { HorizontalSeparator } from "./HorizontalSeparator";
+import { LOWER_OPACITY } from "@/lib/utils";
 
 type SeeCodeDialogButtonProps = {
   palette: ColorPalette;
@@ -170,7 +170,7 @@ export const SeeCodeDialogButton = ({
   );
 
   return (
-    <Popover onOpenChange={(open) => setAppOpacity(open ? 0.3 : 1)}>
+    <Popover onOpenChange={(open) => setAppOpacity(open ? LOWER_OPACITY : 1)}>
       <PopoverTrigger asChild>
         <Button>
           <Code size={15} />
