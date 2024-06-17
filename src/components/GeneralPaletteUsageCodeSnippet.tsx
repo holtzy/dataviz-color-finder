@@ -60,7 +60,7 @@ paletteer_d("${paletteName}")
         </a>{" "}
         library.
       </p>
-      <div className="bg-gray-50 rounded-sm mt-2 p-4 text-xs leading-5">
+      <div className="bg-gray-50 rounded-sm mt-2 p-4 text-xs leading-5 w-[600px]">
         <pre>
           <code>{snippetRCode}</code>
         </pre>

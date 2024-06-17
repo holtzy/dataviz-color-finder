@@ -315,6 +315,7 @@ export default function Home() {
       setEnabledPaletteLength={setEnabledPaletteLength}
       enabledPaletteLength={enabledPaletteLength}
       remainingPaletteNumber={filteredColorPaletteList.length}
+      setAppOpacity={setAppOpacity}
     />
   );
 

@@ -7,6 +7,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
+import { LOWER_OPACITY } from "@/lib/utils";
+import { HorizontalSeparator } from "./HorizontalSeparator";
 
 type FilterDialogButtonProps = {
   enabledPaletteKinds: PaletteKind[];
@@ -14,6 +16,7 @@ type FilterDialogButtonProps = {
   enabledPaletteLength: number[];
   setEnabledPaletteLength: (list: number[]) => void;
   remainingPaletteNumber: number;
+  setAppOpacity: (opacity: number) => void;
 };
 
 export const FilterDialogButton = ({
@@ -22,6 +25,7 @@ export const FilterDialogButton = ({
   enabledPaletteLength,
   setEnabledPaletteLength,
   remainingPaletteNumber,
+  setAppOpacity,
 }: FilterDialogButtonProps) => {
   const getCheckboxPaletteKind = (type: PaletteKind) => {
     return (
@@ -77,24 +81,34 @@ export const FilterDialogButton = ({
   };
 
   return (
-    <Popover>
+    <Popover onOpenChange={(open) => setAppOpacity(open ? LOWER_OPACITY : 1)}>
       <PopoverTrigger style={{ height: 40 }}>
         <Button variant="outline">
           <Filter />
         </Button>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent className="py-12 px-8  shadow-2xl border border-black">
         <p className="font-bold text-lg">Add filters</p>
         <p className="text-sm text-gray-400">
           {remainingPaletteNumber + " palettes remaining"}
         </p>
-        <p className="mt-8 text-sm font-bold">Palette types 🎨 </p>
+
+        <div className="my-4">
+          <HorizontalSeparator />
+        </div>
+
+        <p className="text-sm font-bold">Palette types 🎨 </p>
         <div className="ml-6">
           {getCheckboxPaletteKind("qualitative")}
           {getCheckboxPaletteKind("sequential")}
           {getCheckboxPaletteKind("diverging")}
         </div>
-        <p className="mt-8 text-sm font-bold">Palette length ↔️ </p>
+
+        <div className="my-4">
+          <HorizontalSeparator />
+        </div>
+
+        <p className="text-sm font-bold">Palette length ↔️ </p>
         <div className="ml-6">
           <div className="flex flex-row gap-3">
             {[1, 2, 3, 4, 5, 6, 7].map((num) => {

@@ -1,25 +1,28 @@
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import { Expand } from "lucide-react";
 import { ReactNode } from "react";
+import { LOWER_OPACITY } from "@/lib/utils";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 type ExpandChartDialogButtonProps = {
   children: ReactNode;
+  setAppOpacity: (opacity: number) => void;
 };
 
 export const ExpandChartDialogButton = ({
   children,
+  setAppOpacity,
 }: ExpandChartDialogButtonProps) => {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Popover onOpenChange={(open) => setAppOpacity(open ? LOWER_OPACITY : 1)}>
+      <PopoverTrigger asChild>
         <Button>
           <Expand size={15} />
         </Button>
-      </DialogTrigger>
-      <DialogContent className="w-4/5 h-4/5 max-w-[800px] max-h-[800px] py-20">
+      </PopoverTrigger>
+      <PopoverContent className="m-2 p-2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] shadow-2xl border border-black">
         {children}
-      </DialogContent>
-    </Dialog>
+      </PopoverContent>
+    </Popover>
   );
 };

@@ -95,3 +95,12 @@
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
 }
+
+:not(pre) > code {
+  background-color: hsl(var(--secondary));
+  border-radius: 3px;
+  padding: 3px 6px;
+  font-size: 85%;
+  font-family: var(--font-fira);
+  /* border: solid .1px hsl(var(--primary)); */
+}
