@@ -23,8 +23,8 @@ cmap = load_cmap("${selectedColorObject.name}")
 `.trim();
 
   const snippetRCode = `
-# install.packages("paleteer")
-library(paleteer)
+# install.packages("paletteer")
+library(paletteer)
 
 # Use in a ggplot2 chart:
 scale_colour_paletteer_d("${selectedColorObject.name}")
@@ -68,7 +68,7 @@ scale_fill_paletteer_d("${selectedColorObject.name}")
           <p className="mt-2">
             Note that you'll need to install the{" "}
             <code>
-              {selectedLanguage === "python" ? "pypalettes" : "paleteer"}
+              {selectedLanguage === "python" ? "pypalettes" : "paletteer"}
             </code>{" "}
             library first.
           </p>

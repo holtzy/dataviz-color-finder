@@ -41,7 +41,7 @@ export const SeeCodeDialogButton = ({
   const pkg = palette.source.replace("The R package: {", "").replace("}", "");
   const completePaletteName = pkg + "::" + palette.name;
 
-  // In R, paleteer does NOT allow to make a continuous graph with a qualitative palette.
+  // In R, paletteer does NOT allow to make a continuous graph with a qualitative palette.
   // For instance, not possible to make a heatmap from a red/yellow/green palette.
   // Show a warning in this case
   const isPaletteNotAllowed =
@@ -146,7 +146,7 @@ export const SeeCodeDialogButton = ({
       <p>
         To prevent it,{" "}
         <a href="https://r-graph-gallery.com/package/paletteer.html">
-          <u>paleteer</u>
+          <u>paletteer</u>
         </a>{" "}
         does <b>not</b> allow it.
       </p>

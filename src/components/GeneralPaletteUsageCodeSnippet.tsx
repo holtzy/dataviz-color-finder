@@ -14,7 +14,7 @@ cmap = load_cmap("${paletteName}")
 
   const snippetRCode = `
 # Load library
-library(paleteer)
+library(paletteer)
 
 scale_colour_paletteer_d("${paletteName}")
 scale_color_paletteer_d("${paletteName}")
@@ -56,7 +56,7 @@ paletteer_d("${paletteName}")
           target="_blank"
           className="gradient underline"
         >
-          paleteer
+          paletteer
         </a>{" "}
         library.
       </p>
