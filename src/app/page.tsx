@@ -329,6 +329,7 @@ export default function Home() {
     <ExportDialogButton
       selectedColorObject={selectedColorObject}
       selectedLanguage={selectedLanguage}
+      setAppOpacity={setAppOpacity}
     />
   );
 
