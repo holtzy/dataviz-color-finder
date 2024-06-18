@@ -60,6 +60,10 @@ export default function Home() {
   const [selectedColorBlindness, setSelectedColorBlindness] =
     useState<ColorBlindnessType>("Normal vision");
 
+  const [selectedColorTarget, setSelectedColorTarget] = useState<
+    string | undefined
+  >(undefined);
+
   const [appOpacity, setAppOpacity] = useState(1);
 
   const [enabledPaletteKinds, setEnabledPaletteKinds] = useState<PaletteKind[]>(
@@ -316,6 +320,8 @@ export default function Home() {
       enabledPaletteLength={enabledPaletteLength}
       remainingPaletteNumber={filteredColorPaletteList.length}
       setAppOpacity={setAppOpacity}
+      selectedColorTarget={selectedColorTarget}
+      setSelectedColorTarget={setSelectedColorTarget}
     />
   );
 

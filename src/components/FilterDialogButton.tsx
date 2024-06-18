@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
-import { Download, Filter } from "lucide-react";
-import { ColorPalette, PaletteKind } from "@/data/color-palette-list";
+import { Filter } from "lucide-react";
+import { PaletteKind } from "@/data/color-palette-list";
 import {
   Popover,
   PopoverContent,
@@ -9,6 +9,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { LOWER_OPACITY } from "@/lib/utils";
 import { HorizontalSeparator } from "./HorizontalSeparator";
+import { ChromePicker, ColorResult } from "react-color";
+import { useState } from "react";
 
 type FilterDialogButtonProps = {
   enabledPaletteKinds: PaletteKind[];
@@ -17,6 +19,8 @@ type FilterDialogButtonProps = {
   setEnabledPaletteLength: (list: number[]) => void;
   remainingPaletteNumber: number;
   setAppOpacity: (opacity: number) => void;
+  selectedColorTarget: string | undefined;
+  setSelectedColorTarget: (col: string | undefined) => void;
 };
 
 export const FilterDialogButton = ({
@@ -26,7 +30,11 @@ export const FilterDialogButton = ({
   setEnabledPaletteLength,
   remainingPaletteNumber,
   setAppOpacity,
+  selectedColorTarget,
+  setSelectedColorTarget,
 }: FilterDialogButtonProps) => {
+  const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
+
   const getCheckboxPaletteKind = (type: PaletteKind) => {
     return (
       <div className="flex items-center space-x-2 my-3">
@@ -125,6 +133,39 @@ export const FilterDialogButton = ({
             })}
           </div>
         </div>
+
+        <div className="my-4">
+          <HorizontalSeparator />
+        </div>
+
+        <p className="text-sm font-bold">Color target 🎯 </p>
+        {!selectedColorTarget && (
+          <Button onClick={() => setIsColorPickerOpen(true)} className="my-2">
+            Pick Color
+          </Button>
+        )}
+        {selectedColorTarget && (
+          <Button
+            style={{ backgroundColor: selectedColorTarget }}
+            onClick={() => {
+              setSelectedColorTarget(undefined);
+              setIsColorPickerOpen(false);
+            }}
+            className="my-2"
+          >
+            Remove Filter
+          </Button>
+        )}
+
+        {isColorPickerOpen ? (
+          <div>
+            <div onClick={() => setIsColorPickerOpen(false)} />
+            <ChromePicker
+              color={selectedColorTarget}
+              onChange={(col: ColorResult) => setSelectedColorTarget(col.hex)}
+            />
+          </div>
+        ) : null}
       </PopoverContent>
     </Popover>
   );
