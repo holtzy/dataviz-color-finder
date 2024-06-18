@@ -13,3 +13,8 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+// NOTE TO SELF:
+// use .cjs for local dev here
+// use .js for deploy
+// do not ask me why

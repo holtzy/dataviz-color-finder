@@ -1,15 +1,27 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+"use client";
+
 import { ColorPalette, colorPaletteList } from "@/data/color-palette-list";
 import { formatPaletteName } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 import { useMemo, useState } from "react";
+
+import * as React from "react";
+import { ChevronsUpDown } from "lucide-react";
+
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 type ColorPaletteSelectButtonProps = {
   filteredColorPaletteList: ColorPalette[];
@@ -22,6 +34,8 @@ export const ColorPaletteSelectButton = ({
   selectedPalette,
   setSelectedPalette,
 }: ColorPaletteSelectButtonProps) => {
+  const [open, setOpen] = React.useState(false);
+
   // For perf reasons, I cannot display the 2500 palettes by default.
   // So I display only 100 of them, and then show a "Show more" button
   const [displayedNumber, setDisplayedNumber] = useState(100);
@@ -30,37 +44,70 @@ export const ColorPaletteSelectButton = ({
   };
 
   const selectItemList = useMemo(() => {
-    return filteredColorPaletteList.slice(0, displayedNumber).map((pal, i) => {
+    return filteredColorPaletteList.slice(0, displayedNumber).map((p, i) => {
       return (
-        <SelectItem value={pal.name} key={i}>
-          <PalettePreview palette={pal} />
-        </SelectItem>
+        <CommandItem
+          key={p.name}
+          value={p.name}
+          onSelect={(currentValue) => {
+            setSelectedPalette(currentValue);
+            setOpen(false);
+          }}
+        >
+          <PalettePreview palette={p} />
+        </CommandItem>
       );
     });
   }, [displayedNumber, filteredColorPaletteList]);
 
   return (
-    <Select onValueChange={setSelectedPalette} value={selectedPalette}>
-      <SelectTrigger className="w-[400px]">
-        <SelectValue>
-          <PalettePreview
-            palette={
-              colorPaletteList.find(
-                (c) => c.name.toLowerCase() === selectedPalette.toLowerCase()
-              ) || colorPaletteList[0]
-            }
-          />
-        </SelectValue>
-      </SelectTrigger>
-
-      <SelectContent>
-        {selectItemList}
-        <Separator className="my-2" />
-        <Button size={"sm"} onClick={showMorePalette} className="my-2 ml-8">
-          Show more
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-[400px] justify-between"
+        >
+          {selectedPalette ? (
+            <PalettePreview
+              palette={
+                colorPaletteList.find(
+                  (c) => c.name.toLowerCase() === selectedPalette.toLowerCase()
+                ) || colorPaletteList[0]
+              }
+            />
+          ) : (
+            "Select palette..."
+          )}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
-      </SelectContent>
-    </Select>
+      </PopoverTrigger>
+      <PopoverContent className="w-[400px] p-0">
+        <Command>
+          <CommandInput placeholder="Search palette..." />
+          <CommandList>
+            <CommandEmpty>No palette found.</CommandEmpty>
+            <CommandGroup className="pl-1">{selectItemList}</CommandGroup>
+            <Separator className="my-2" />
+            <div className="flex items-center gap-4">
+              <Button
+                size={"sm"}
+                onClick={showMorePalette}
+                className="mt-4 mb-6 ml-3"
+              >
+                Show more
+              </Button>
+              <span className="text-xs text-gray-500 pb-2 italic">
+                {"Only " +
+                  displayedNumber +
+                  " palettes loaded, click for more."}
+              </span>
+            </div>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
   );
 };
 
