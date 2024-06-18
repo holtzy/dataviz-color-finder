@@ -39,11 +39,12 @@ import {
   modT,
 } from "@/lib/get-color-blindness-simulation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ShareButton } from "@/components/ShareButton";
 import { GeneralPaletteUsageCodeSnippet } from "@/components/GeneralPaletteUsageCodeSnippet";
 import { ggplot2Theme, matplotlibTheme } from "@/dataviz/theme";
+import { getPaletteSimilarityScore } from "@/lib/get-palette-similarity-score";
 
 export default function Home() {
   // User can enter a palette name in the URL to see it directly
@@ -76,9 +77,32 @@ export default function Home() {
   const [isNextToastAllowed, setIsNextToastAllowed] = useState(true);
   const { toast } = useToast();
 
-  const filteredColorPaletteList = colorPaletteList
-    .filter((p) => enabledPaletteKinds.includes(p.kind))
-    .filter((p) => enabledPaletteLength.includes(p.palette.length));
+  const filteredColorPaletteList = useMemo(() => {
+    const filtered = colorPaletteList
+      .filter((p) => enabledPaletteKinds.includes(p.kind))
+      .filter((p) => enabledPaletteLength.includes(p.palette.length));
+
+    let filteredAndSorted = filtered;
+    if (selectedColorTarget) {
+      const palettesWithScores = filtered.map((p) => ({
+        palette: p,
+        score: getPaletteSimilarityScore(p.palette, selectedColorTarget),
+      }));
+
+      palettesWithScores.sort((a, b) => a.score - b.score);
+
+      filteredAndSorted = palettesWithScores
+        .slice(0, 50)
+        .map((pws) => pws.palette);
+    }
+
+    return filteredAndSorted;
+  }, [
+    colorPaletteList,
+    enabledPaletteKinds,
+    enabledPaletteLength,
+    selectedColorTarget,
+  ]);
 
   const selectedColorObject =
     colorPaletteList.find(

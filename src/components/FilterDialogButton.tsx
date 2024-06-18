@@ -35,6 +35,18 @@ export const FilterDialogButton = ({
 }: FilterDialogButtonProps) => {
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
 
+  const [selectedColor, setSelectedColor] = useState(selectedColorTarget);
+
+  // Debounce the heavy operation for 500ms
+  const debouncedHandleColorChange = debounce((color: string) => {
+    setSelectedColorTarget(color);
+  }, 500);
+
+  const handleColorChange = (col: ColorResult) => {
+    setSelectedColor(col.hex);
+    debouncedHandleColorChange(col.hex); // Trigger the debounced function
+  };
+
   const getCheckboxPaletteKind = (type: PaletteKind) => {
     return (
       <div className="flex items-center space-x-2 my-3">
@@ -160,13 +172,24 @@ export const FilterDialogButton = ({
         {isColorPickerOpen ? (
           <div>
             <div onClick={() => setIsColorPickerOpen(false)} />
-            <ChromePicker
-              color={selectedColorTarget}
-              onChange={(col: ColorResult) => setSelectedColorTarget(col.hex)}
-            />
+            <ChromePicker color={selectedColor} onChange={handleColorChange} />
           </div>
         ) : null}
       </PopoverContent>
     </Popover>
   );
+};
+
+// Debounce function
+const debounce = <F extends (...args: any[]) => void>(
+  func: F,
+  delay: number
+) => {
+  let timer: NodeJS.Timeout;
+  return function (this: any, ...args: Parameters<F>) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
 };
