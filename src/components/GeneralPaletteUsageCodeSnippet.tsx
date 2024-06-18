@@ -1,25 +1,32 @@
+import { ColorPalette } from "@/data/color-palette-list";
+
 type GeneralPaletteUsageCodeSnippetProps = {
   language: "r" | "python";
-  paletteName: string;
+  selectedColorObject: ColorPalette;
 };
 
 export const GeneralPaletteUsageCodeSnippet = ({
   language,
-  paletteName,
+  selectedColorObject,
 }: GeneralPaletteUsageCodeSnippetProps) => {
   const snippetPythonCode = `
 from pypalettes import load_cmap
-cmap = load_cmap("${paletteName}")
+cmap = load_cmap("${selectedColorObject.name}")
 `.trim();
+
+  const pkg = selectedColorObject.source
+    .replace("The R package: {", "")
+    .replace("}", "");
+  const completePaletteName = pkg + "::" + selectedColorObject.name;
 
   const snippetRCode = `
 # Load library
 library(paletteer)
 
-scale_colour_paletteer_d("${paletteName}")
-scale_color_paletteer_d("${paletteName}")
-scale_fill_paletteer_d("${paletteName}")
-paletteer_d("${paletteName}")
+scale_colour_paletteer_d("${completePaletteName}")
+scale_color_paletteer_d("${completePaletteName}")
+scale_fill_paletteer_d("${completePaletteName}")
+paletteer_d("${completePaletteName}")
 `.trim();
 
   if (language === "python") {

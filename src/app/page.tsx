@@ -392,7 +392,7 @@ export default function Home() {
 
       <GeneralPaletteUsageCodeSnippet
         language={selectedLanguage}
-        paletteName={selectedColorObject.name}
+        selectedColorObject={selectedColorObject}
       />
     </main>
   );

@@ -22,13 +22,18 @@ from pypalettes import load_cmap
 cmap = load_cmap("${selectedColorObject.name}")
 `.trim();
 
+  const pkg = selectedColorObject.source
+    .replace("The R package: {", "")
+    .replace("}", "");
+  const completePaletteName = pkg + "::" + selectedColorObject.name;
+
   const snippetRCode = `
 # install.packages("paletteer")
 library(paletteer)
 
 # Use in a ggplot2 chart:
-scale_colour_paletteer_d("${selectedColorObject.name}")
-scale_fill_paletteer_d("${selectedColorObject.name}")
+scale_colour_paletteer_d("${completePaletteName}")
+scale_fill_paletteer_d("${completePaletteName}")
 `.trim();
 
   const colorArrayString = selectedColorObject.palette.join(", ");
