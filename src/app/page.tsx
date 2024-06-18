@@ -38,7 +38,7 @@ import {
   modP,
   modT,
 } from "@/lib/get-color-blindness-simulation";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Gift } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ShareButton } from "@/components/ShareButton";
@@ -76,6 +76,29 @@ export default function Home() {
 
   const [isNextToastAllowed, setIsNextToastAllowed] = useState(true);
   const { toast } = useToast();
+
+  const [isRandomPaletteUpdating, setIsRandomPaletteUpdating] = useState(false);
+
+  const getRandomNumber = () => Math.floor(Math.random() * 2000) + 1;
+
+  useEffect(() => {
+    if (isRandomPaletteUpdating) {
+      let delay = 5; // Initial delay in milliseconds
+
+      const updateNumber = () => {
+        setSelectedPalette(filteredColorPaletteList[getRandomNumber()].name);
+        delay *= 1.2; // Increase delay to slow down progressively
+        if (delay < 500) {
+          // Stop when delay is too long (or any condition you prefer)
+          setTimeout(updateNumber, delay);
+        } else {
+          setIsRandomPaletteUpdating(false); // Stop updating
+        }
+      };
+
+      updateNumber();
+    }
+  }, [isRandomPaletteUpdating]);
 
   const filteredColorPaletteList = useMemo(() => {
     const filtered = colorPaletteList
@@ -340,6 +363,15 @@ export default function Home() {
     />
   );
 
+  const surpriseMeButton = (
+    <Button
+      variant={"outline"}
+      onClick={() => setIsRandomPaletteUpdating(true)}
+    >
+      <Gift size={22} />
+    </Button>
+  );
+
   const filterPaletteDialog = (
     <FilterDialogButton
       setEnabledPaletteKinds={setEnabledPaletteKinds}
@@ -380,6 +412,7 @@ export default function Home() {
           {prevAndNextButtons}
           {exportButton}
           {colorBlindnessButton}
+          {surpriseMeButton}
           {shareButton}
         </div>
         {paletteSelectButton}
@@ -392,6 +425,7 @@ export default function Home() {
         {prevAndNextButtons}
         {exportButton}
         {colorBlindnessButton}
+        {surpriseMeButton}
         {shareButton}
       </div>
 
