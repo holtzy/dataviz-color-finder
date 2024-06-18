@@ -121,6 +121,10 @@ export default function Home() {
       : c;
   });
 
+  useEffect(() => {
+    setSelectedPalette(filteredColorPaletteList[0].name);
+  }, [selectedColorTarget]);
+
   const switchToPreviousPalette = () => {
     const currentId = filteredColorPaletteList.findIndex(
       (c) => c.name === selectedPalette
