@@ -32,11 +32,10 @@ import { ResponsiveTreemap } from "@/dataviz/treemap/ResponsiveTreemap";
 import { treemapData } from "@/dataviz/treemap/data";
 import {
   ColorBlindnessType,
-  getColorBlindnessSimulation,
+  clrDeutan,
+  clrProtan,
+  clrTritan,
   hexToGrayscale,
-  modD,
-  modP,
-  modT,
 } from "@/lib/get-color-blindness-simulation";
 import { ArrowLeft, ArrowRight, Gift, Loader } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -134,11 +133,11 @@ export default function Home() {
 
   const selectedColorList = selectedColorObject.palette.map((c) => {
     return selectedColorBlindness === "Protanopia"
-      ? getColorBlindnessSimulation(c, modP)
+      ? clrProtan(c)
       : selectedColorBlindness === "Deuteranopia"
-      ? getColorBlindnessSimulation(c, modD)
+      ? clrDeutan(c)
       : selectedColorBlindness === "Tritanopia"
-      ? getColorBlindnessSimulation(c, modT)
+      ? clrTritan(c)
       : selectedColorBlindness === "Grey scale"
       ? hexToGrayscale(c)
       : c;
