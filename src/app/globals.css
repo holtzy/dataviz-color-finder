@@ -104,3 +104,15 @@
   font-family: var(--font-fira);
   /* border: solid .1px hsl(var(--primary)); */
 }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin {
+  animation: spin 2s linear infinite;
+}

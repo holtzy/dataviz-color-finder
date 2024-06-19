@@ -38,7 +38,7 @@ import {
   modP,
   modT,
 } from "@/lib/get-color-blindness-simulation";
-import { ArrowLeft, ArrowRight, Gift } from "lucide-react";
+import { ArrowLeft, ArrowRight, Gift, Loader } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { ShareButton } from "@/components/ShareButton";
@@ -368,7 +368,11 @@ export default function Home() {
       variant={"outline"}
       onClick={() => setIsRandomPaletteUpdating(true)}
     >
-      <Gift size={22} />
+      {isRandomPaletteUpdating ? (
+        <Loader size={22} className="spin" />
+      ) : (
+        <Gift size={22} />
+      )}
     </Button>
   );
 
