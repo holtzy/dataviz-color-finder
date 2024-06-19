@@ -145,7 +145,9 @@ export default function Home() {
   });
 
   useEffect(() => {
-    setSelectedPalette(filteredColorPaletteList[0].name);
+    if (selectedColorTarget) {
+      setSelectedPalette(filteredColorPaletteList[0].name);
+    }
   }, [selectedColorTarget]);
 
   const switchToPreviousPalette = () => {
