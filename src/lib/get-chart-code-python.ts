@@ -14,7 +14,7 @@ cmap = load_cmap('${palette}')
 
 # create a bar plot
 fig, ax = plt.subplots(figsize=(8,8), dpi=300)
-ax.barh(df["name"], df["value"], color=[cmap(i) for i in range(len(df))][::-1])
+ax.barh(df["name"], df["value"], color=cmap.colors)
 plt.show()`.trim();
 
     return code
@@ -59,7 +59,7 @@ cmap = load_cmap('${palette}')
 
 # create a Pie chart
 fig, ax = plt.subplots(figsize=(11,8), dpi=300)
-ax.pie(df["value"], labels=df["name"], colors=[cmap(i) for i in range(len(df))])
+ax.pie(df["value"], labels=df["name"], colors=cmap.colors)
 plt.show()`.trim();
 
     return code
@@ -79,8 +79,6 @@ df = pd.read_csv("https://raw.githubusercontent.com/holtzy/The-Python-Graph-Gall
 
 # create a color palette
 cmap = load_cmap('${palette}')
-unique_hues = df['continent'].unique()
-palette = [cmap(i / len(unique_hues)) for i in range(len(unique_hues))]
 
 # create a bubble chart
 fig, ax = plt.subplots(figsize=(11, 8), dpi=300)
@@ -92,7 +90,7 @@ sns.scatterplot(
    size="pop",
    hue="continent",
    edgecolor=None,
-   palette=palette,
+   palette=cmap.colors,
    sizes=(400, 4000),
    legend=False,
    ax=ax
@@ -178,13 +176,12 @@ groupD = df['groupD']
 
 # # create a color palette
 cmap = load_cmap('${palette}')
-colors = [cmap(i / len(df.columns)) for i in range(len(df.columns))]
 
 fig, ax = plt.subplots(figsize=(10, 10), dpi=300)
 ax.stackplot(
    x, groupA, groupB, groupC, groupD,
    labels=['groupA', 'groupB', 'groupC', 'groupD'],
-   colors=colors,
+   colors=cmap.colors,
    edgecolor='grey',
    linewidth=1,
    baseline='wiggle'
